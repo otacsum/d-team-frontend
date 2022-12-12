@@ -60,10 +60,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "d-team-frontend:build:production"
+              "browserTarget": "d-team-frontend:build:production",
+              "port": 3000
             },
             "development": {
-              "browserTarget": "d-team-frontend:build:development"
+              "browserTarget": "d-team-frontend:build:development",
+              "port": 3001
             }
           },
           "defaultConfiguration": "development"
