@@ -61,7 +61,7 @@
           "configurations": {
             "production": {
               "browserTarget": "d-team-frontend:build:production",
-              "port": 3000
+              "port": 3001
             },
             "development": {
               "browserTarget": "d-team-frontend:build:development",
