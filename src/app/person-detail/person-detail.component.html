@@ -1,0 +1,13 @@
+<div *ngIf="person">
+    <h2>{{person.first_name | uppercase}} Details</h2>
+    <div>ID: {{person.id}}</div>
+    <div>Role: {{person.type}}</div>
+    <div>
+        <label for="first-name">First name: </label>
+        <input id="first-name" [(ngModel)]="person.first_name" placeholder="First name">
+    </div>
+    <div>
+        <label for="last-name">Last name: </label>
+        <input id="last-name" [(ngModel)]="person.last_name" placeholder="Last name">
+    </div>
+</div>

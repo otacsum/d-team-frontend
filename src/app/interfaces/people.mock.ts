@@ -1,0 +1,186 @@
+
+import {Person} from '../interfaces/person.interface';
+
+export const People: Person[] = [
+    {
+        "id": "613e0538-f657-43f3-b072-665fc4188552",
+        "type": "student",
+        "first_name": "testFirstname-2",
+        "last_name": "testLastname-2",
+        "email": "test.mail2@test.test",
+        "street_address": "testAddress-2",
+        "city": "testCity-2",
+        "state_abbreviation": "AA",
+        "zip_code": 12345,
+        "is_active": true,
+        "createdAt": "2022-12-08T16:08:44.932Z",
+        "updatedAt": "2022-12-08T16:08:44.932Z",
+        "credentials": []
+    },
+    {
+        "id": "a1f21915-a35e-4cc4-92ae-d1bc51a74247",
+        "type": "student",
+        "first_name": "testFirstname-3",
+        "last_name": "testLastname-3",
+        "email": "test.mail3@test.test",
+        "street_address": "testAddress-3",
+        "city": "testCity-3",
+        "state_abbreviation": "AA",
+        "zip_code": 12345,
+        "is_active": true,
+        "createdAt": "2022-12-08T16:08:44.932Z",
+        "updatedAt": "2022-12-08T16:08:44.932Z",
+        "credentials": []
+    },
+    {
+        "id": "d6f7ee3e-fbba-49cb-b44f-6e9aa4bec198",
+        "type": "student",
+        "first_name": "testFirstname-4",
+        "last_name": "testLastname-4",
+        "email": "test.mail4@test.test",
+        "street_address": "testAddress-4",
+        "city": "testCity-4",
+        "state_abbreviation": "AA",
+        "zip_code": 12345,
+        "is_active": true,
+        "createdAt": "2022-12-08T16:08:44.932Z",
+        "updatedAt": "2022-12-08T16:08:44.932Z",
+        "credentials": []
+    },
+    {
+        "id": "263a320d-68bb-4b73-b35f-6023c3756cc0",
+        "type": "student",
+        "first_name": "testFirstname-5",
+        "last_name": "testLastname-5",
+        "email": "test.mail5@test.test",
+        "street_address": "testAddress-5",
+        "city": "testCity-5",
+        "state_abbreviation": "AA",
+        "zip_code": 12345,
+        "is_active": true,
+        "createdAt": "2022-12-08T16:08:44.932Z",
+        "updatedAt": "2022-12-08T16:08:44.932Z",
+        "credentials": []
+    },
+    {
+        "id": "812ebefb-3f2f-453c-b8ab-f621a979c91a",
+        "type": "student",
+        "first_name": "testFirstname-6",
+        "last_name": "testLastname-6",
+        "email": "test.mail6@test.test",
+        "street_address": "testAddress-6",
+        "city": "testCity-6",
+        "state_abbreviation": "AA",
+        "zip_code": 12345,
+        "is_active": true,
+        "createdAt": "2022-12-08T16:08:44.932Z",
+        "updatedAt": "2022-12-08T16:08:44.932Z",
+        "credentials": []
+    },
+    {
+        "id": "3c3dd875-03c6-4f65-8bf1-e372f5429baf",
+        "type": "student",
+        "first_name": "testFirstname-7",
+        "last_name": "testLastname-7",
+        "email": "test.mail7@test.test",
+        "street_address": "testAddress-7",
+        "city": "testCity-7",
+        "state_abbreviation": "AA",
+        "zip_code": 12345,
+        "is_active": true,
+        "createdAt": "2022-12-08T16:08:44.932Z",
+        "updatedAt": "2022-12-08T16:08:44.932Z",
+        "credentials": []
+    },
+    {
+        "id": "c8d92ed7-da9e-4330-99d3-515089a93698",
+        "type": "student",
+        "first_name": "testFirstname-8",
+        "last_name": "testLastname-8",
+        "email": "test.mail8@test.test",
+        "street_address": "testAddress-8",
+        "city": "testCity-8",
+        "state_abbreviation": "AA",
+        "zip_code": 12345,
+        "is_active": true,
+        "createdAt": "2022-12-08T16:08:44.932Z",
+        "updatedAt": "2022-12-08T16:08:44.932Z",
+        "credentials": []
+    },
+    {
+        "id": "b594b596-e9f1-4b90-a82d-37ac1c05443a",
+        "type": "teacher",
+        "first_name": "John",
+        "last_name": "Doe, PhD",
+        "email": "test.mail0@test.test",
+        "street_address": "testAddress-0",
+        "city": "testCity-0",
+        "state_abbreviation": "AA",
+        "zip_code": 12345,
+        "is_active": true,
+        "createdAt": "2022-12-08T16:08:44.932Z",
+        "updatedAt": "2022-12-08T17:15:51.908Z",
+        "credentials": [
+            /* {
+                "id": "44c9939e-1d47-44a5-acd1-e7469b98838b",
+                "person_id": "b594b596-e9f1-4b90-a82d-37ac1c05443a",
+                "job_title": "Medical Physics Education",
+                "rank": "CAMPEP",
+                "credential_type": "Certification",
+                "subject_abbreviation": "PHYS",
+                "is_active": true,
+                "createdAt": "2022-12-09T14:04:53.713Z",
+                "updatedAt": "2022-12-09T14:04:53.713Z"
+            },
+            {
+                "id": "d6132fff-48ef-4c55-a6bf-c31f6abf7243",
+                "person_id": "b594b596-e9f1-4b90-a82d-37ac1c05443a",
+                "job_title": "Professor",
+                "rank": "Senior",
+                "credential_type": "Role",
+                "subject_abbreviation": "PHYS",
+                "is_active": true,
+                "createdAt": "2022-12-09T13:51:27.793Z",
+                "updatedAt": "2022-12-09T13:51:27.793Z"
+            } */
+        ]
+    },
+    {
+        "id": "873473fd-e2c3-4823-8ffa-70c7c4f0b656",
+        "type": "teacher",
+        "first_name": "Janice",
+        "last_name": "Smith",
+        "email": "test.mail1@test.test",
+        "street_address": "testAddress-1",
+        "city": "testCity-1",
+        "state_abbreviation": "AA",
+        "zip_code": 12345,
+        "is_active": true,
+        "createdAt": "2022-12-08T16:08:44.932Z",
+        "updatedAt": "2022-12-08T17:16:39.860Z",
+        "credentials": [
+            /* {
+                "id": "ae7ad74c-ff99-45a0-a876-f6b46d31e129",
+                "person_id": "873473fd-e2c3-4823-8ffa-70c7c4f0b656",
+                "job_title": "Software Engineering Master Certification ",
+                "rank": "SEMC",
+                "credential_type": "Certification",
+                "subject_abbreviation": "CSE",
+                "is_active": true,
+                "createdAt": "2022-12-09T13:54:49.761Z",
+                "updatedAt": "2022-12-09T14:02:36.650Z"
+            },
+            {
+                "id": "006da730-77bc-46fb-a0f1-5c2ae28d174e",
+                "person_id": "873473fd-e2c3-4823-8ffa-70c7c4f0b656",
+                "job_title": "Certified Information Systems Security Professional (CISSP)",
+                "rank": "",
+                "credential_type": "Certification",
+                "subject_abbreviation": "CSE",
+                "is_active": true,
+                "createdAt": "2022-12-09T13:55:53.473Z",
+                "updatedAt": "2022-12-09T14:01:40.034Z"
+            } */
+        ]
+    }
+]
