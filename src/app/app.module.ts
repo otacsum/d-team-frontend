@@ -8,13 +8,15 @@ import {PeopleComponent} from './people/people.component';
 import {PersonDetailComponent} from './person-detail/person-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         PeopleComponent,
         PersonDetailComponent,
-        MessagesComponent
+        MessagesComponent,
+        DashboardComponent
     ],
     imports: [
         BrowserModule,

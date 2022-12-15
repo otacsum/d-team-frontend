@@ -1,3 +1,9 @@
 <h1 class="toolbar">{{ title }}</h1>
-<app-people></app-people>
+
+<nav>
+    <a routerLink="/dashboard">Dashboard</a>
+    <a routerLink="/people">Students & Staff</a>
+</nav>
+
+<router-outlet></router-outlet>
 <app-messages></app-messages>
