@@ -1,21 +1,24 @@
-<div class="login-screen-container">
+<!-- <div class="login-screen-container">
     <div class="login-screen-login-screen">
       <div class="login-screen-container1">
         <div class="login-screen-container2">
-          <span class="login-screen-text">EDUCATOR LOGIN:</span>
           <input
             type="text"
-            placeholder="USERNAME"
+            placeholder="E-Mail"
             id="eduUNinp"
-            class="login-screen-textinput1 input"
+            class="login-screen-textinput input"
+            name="email"
+            [(ngModel)]="login.email"
           />
           <input
             type="text"
-            placeholder="PASSWORD"
+            placeholder="Password"
             id="eduPWinp"
-            class="login-screen-textinput input"
+            class="login-screen-textinput1 input"
+            name="password"
+            [(ngModel)]="login.password"
           />
-          <a routerLink="/dashboard"><button class="login-screen-button button">LOGIN</button></a>
+          <button (click)="submit()" class="login-screen-button button">LOGIN</button>
         </div>
       </div>
       <h1 class="login-screen-text02">
@@ -31,5 +34,14 @@
         <br />
       </h1>
     </div>
-  </div>
-  
+  </div> -->
+
+<div>
+    <div class="login-error" [ngStyle]="{'display': isError ? 'block' : 'none'}">
+        Invalid Username or Password
+    </div>
+    <span>LOGIN:</span>
+    <input type="text" placeholder="E-Mail" name="email" [(ngModel)]="login.email">
+    <input type="text" placeholder="Password" name="password" [(ngModel)]="login.password">
+    <button (click)="submit()">LOGIN</button>
+</div>

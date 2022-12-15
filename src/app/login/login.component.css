@@ -1,7 +1,8 @@
-:host { 
-    display: contents; 
-  }
-  .login-screen-container {
+:host {
+    display: contents;
+}
+
+.login-screen-container {
     width: 100%;
     display: flex;
     overflow: auto;
@@ -10,8 +11,9 @@
     flex-direction: column;
     justify-content: center;
     background-color: #D9D9D9;
-  }
-  .login-screen-login-screen {
+}
+
+.login-screen-login-screen {
     width: 100%;
     height: 1024px;
     display: flex;
@@ -22,8 +24,9 @@
     border-color: transparent;
     justify-content: center;
     background-color: rgba(226, 226, 226, 1);
-  }
-  .login-screen-container1 {
+}
+
+.login-screen-container1 {
     top: 460px;
     left: 0px;
     right: 0px;
@@ -34,8 +37,9 @@
     position: absolute;
     align-items: center;
     justify-content: center;
-  }
-  .login-screen-container2 {
+}
+
+.login-screen-container2 {
     gap: 0;
     top: 0px;
     flex: 1;
@@ -48,24 +52,28 @@
     flex-direction: column;
     justify-content: center;
     background-color: #d2d0cf;
-  }
-  .login-screen-text {
+}
+
+.login-screen-text {
     top: 44px;
     left: 87px;
     position: absolute;
     font-size: 25px;
     text-align: center;
-  }
-  .login-screen-textinput {
+}
+
+.login-screen-textinput {
     text-align: center;
-  }
-  .login-screen-textinput1 {
+}
+
+.login-screen-textinput1 {
     top: 213px;
     left: 71px;
     position: absolute;
     text-align: center;
-  }
-  .login-screen-button {
+}
+
+.login-screen-button {
     left: 0px;
     right: 0px;
     width: var(--dl-size-size-large);
@@ -75,8 +83,9 @@
     position: absolute;
     font-size: 24px;
     text-align: center;
-  }
-  .login-screen-container3 {
+}
+
+.login-screen-container3 {
     top: 0px;
     flex: 1;
     right: 0px;
@@ -88,8 +97,9 @@
     flex-direction: column;
     justify-content: center;
     background-color: #d2d0cf;
-  }
-  .login-screen-button1 {
+}
+
+.login-screen-button1 {
     left: 0px;
     right: 0px;
     width: var(--dl-size-size-large);
@@ -99,8 +109,9 @@
     position: absolute;
     font-size: 24px;
     text-align: center;
-  }
-  .login-screen-text01 {
+}
+
+.login-screen-text01 {
     top: 42px;
     left: 0px;
     right: 0px;
@@ -108,17 +119,20 @@
     position: absolute;
     font-size: 25px;
     text-align: center;
-  }
-  .login-screen-textinput2 {
+}
+
+.login-screen-textinput2 {
     text-align: center;
-  }
-  .login-screen-textinput3 {
+}
+
+.login-screen-textinput3 {
     top: 209px;
     left: 71px;
     position: absolute;
     text-align: center;
-  }
-  .login-screen-text02 {
+}
+
+.login-screen-text02 {
     top: 368px;
     left: 0px;
     right: 0px;
@@ -127,13 +141,15 @@
     position: absolute;
     font-size: 2em;
     text-align: center;
-  }
-  .login-screen-text03 {
+}
+
+.login-screen-text03 {
     font-size: 1em;
     font-style: normal;
     font-weight: 300;
-  }
-  .login-screen-text05 {
+}
+
+.login-screen-text05 {
     top: 236px;
     left: 0px;
     right: 0px;
@@ -142,8 +158,9 @@
     position: absolute;
     font-size: 2em;
     text-align: center;
-  }
-  .login-screen-text08 {
+}
+
+.login-screen-text08 {
     top: 140px;
     left: 0px;
     right: 0px;
@@ -152,5 +169,16 @@
     position: absolute;
     font-size: 4em;
     text-align: center;
-  }
-  
+}
+
+input {
+ display: block;
+}
+
+.login-error {
+    color: #fff;
+    background-color: #c60007;
+    margin: 10px;
+    padding: 10px;
+    display: none;
+}
