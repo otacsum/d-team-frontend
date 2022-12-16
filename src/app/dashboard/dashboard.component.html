@@ -1,6 +1,10 @@
-<h2>Top People</h2>
-<div class="people-menu">
-    <a *ngFor="let person of people" routerLink="/person/detail/{{person.id}}">
-        {{person.first_name}} {{person.last_name}}
-    </a>
-</div>
+<mat-card class="classroom-card" *ngFor="let person of people" routerLink="/person/detail/{{person.id}}">
+    <mat-card-header>
+            <mat-card-title>{{person.first_name}}</mat-card-title>
+            <mat-card-subtitle>{{person.last_name}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{person.type | uppercase}}</p>
+        <p>{{sampleLorem}}</p>
+    </mat-card-content>
+</mat-card>

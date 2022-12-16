@@ -1,9 +1,54 @@
-<h2>People:</h2>
+<table mat-table [dataSource]="people" multiTemplateDataRows class="mat-elevation-z8">
 
-<ul class="people">
-    <li *ngFor="let person of people">
-        <a routerLink="/person/detail/{{person.id}}">
-            <span class="badge">{{person.id}}</span> {{person.first_name + ' ' + person.last_name}}
-        </a>
-    </li>
-</ul>
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+        <th mat-header-cell *matHeaderCellDef> {{column | uppercase}} </th>
+        <td mat-cell *matCellDef="let person"> {{person[column]}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expand">
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+        <td mat-cell *matCellDef="let person">
+            <button mat-icon-button aria-label="expand row"
+                (click)="(expandedPerson = expandedPerson === person ? null : person); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedPerson !== person">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedPerson === person">keyboard_arrow_up</mat-icon>
+            </button>
+            <button mat-icon-button routerLink="/person/detail/{{person.id}}" aria-label="edit person">
+                <mat-icon aria-hidden="false" aria-label="pencil icon" fontIcon="edit"></mat-icon>
+            </button>
+            <button mat-icon-button aria-label="delete person">
+                <mat-icon aria-hidden="false" aria-label="trashcan icon" fontIcon="delete"></mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let person" [attr.colspan]="columnsToDisplayWithExpand.length">
+            <div class="person-detail" [@detailExpand]="person == expandedPerson ? 'expanded' : 'collapsed'">
+                <div class="person-properties">
+                    <div class="person-email"><a href="mailto:{{person.email}}">{{person.email}}</a></div>
+
+                    <div class="detail-header">ID:</div>
+                    <div>{{person.id}}</div>
+
+                    <div class="detail-header">Address:</div>
+                    <div>{{person.street_address}}</div>
+                    <div>{{person.city}}, {{person.state_abbreviation}} {{person.zip_code}}</div>
+
+                    <div class="detail-header">Other:</div>
+                    <div>Active Account: {{person.is_active}}</div>
+                    <div>Created: {{person.createdAt}}</div>
+                    <div>Last Updated: {{person.updatedAt}}</div>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+    <tr mat-row *matRowDef="let person; columns: columnsToDisplayWithExpand;" class="person-row"
+        [class.expanded-row]="expandedPerson === person"
+        (click)="expandedPerson = expandedPerson === person ? null : person">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+</table>

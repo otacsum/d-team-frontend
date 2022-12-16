@@ -1,4 +1,4 @@
-export interface LoginSuccess {
+export interface Success {
     success: boolean;
     message?: string;
 }

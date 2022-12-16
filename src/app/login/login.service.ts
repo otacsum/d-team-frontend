@@ -5,7 +5,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 
 import {Environment} from 'src/environment/environment';
 import {Login} from '../interfaces/login.interface';
-import {LoginSuccess} from '../interfaces/login-success.interface';
+import {Success} from '../interfaces/success.interface';
 import {MessageHandler} from '../lib/message-handler';
 
 @Injectable({
@@ -20,16 +20,16 @@ export class LoginService {
 
     private loginUrl = Environment.apiBaseUrl + '/person/login';
 
-    login(login: Login): Observable<LoginSuccess> {
-        return this.http.post<LoginSuccess>(this.loginUrl, login)
+    login(login: Login): Observable<Success> {
+        return this.http.post<Success>(this.loginUrl, login)
             .pipe(
-                tap((loginSuccess: LoginSuccess) => {
+                tap((loginSuccess: Success) => {
                     this.messageHandler
                         .log(`LoginService: ${login.email} credentials sent`);
                     this.messageHandler
                         .log(`LoginService: Credentials Valid: ${loginSuccess.success}`);
                 }),
-                catchError(this.messageHandler.handleError<LoginSuccess>('LoginService: error'))
+                catchError(this.messageHandler.handleError<Success>('LoginService: error'))
             );
     }
 }

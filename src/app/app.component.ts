@@ -6,5 +6,5 @@ import {Component} from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'D-Team Academics - School Management System';
+    title = 'L.A. Unified School District';
 }
