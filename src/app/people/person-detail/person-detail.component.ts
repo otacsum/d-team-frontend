@@ -2,10 +2,11 @@ import {Component, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 import {Person} from '../../interfaces/person.interface';
 import {PeopleService} from '../people.service';
-import { MessageHandler } from '../../lib/message-handler';
+import {MessageHandler} from '../../lib/message-handler';
 
 @Component({
     selector: 'app-person-detail',
@@ -20,6 +21,7 @@ export class PersonDetailComponent {
         private location: Location,
         private fb: FormBuilder,
         private messageHandler: MessageHandler,
+        private router: Router,
     ) {}
 
 
@@ -117,9 +119,13 @@ export class PersonDetailComponent {
         const id = String(this.route.snapshot.paramMap.get('id'));
         this.peopleService.updatePerson(id, this.person)
             .subscribe(result => {
-                if (!result.success) {
+                if (result.success) {
                     this.messageHandler
-                    .log(`Update Person: Message: ${result.message}`);
+                        .log(`Update Person: Successful Update, redirecting to all people.`);
+                    this.router.navigate(['/people']);
+                } else {
+                    this.messageHandler
+                        .log(`Update Person: Message: ${result.message}`);
                 }
             });
     }
