@@ -49,4 +49,17 @@ export class PeopleService {
                 catchError(this.messageHandler.handleError<Success>('PersonService: error'))
             );
     }
+
+    createPerson(person: Person): Observable<Success> {
+        return this.http.post<Success>(this.personUrl, person)
+            .pipe(
+                tap((successPayload: Success) => {
+                    this.messageHandler
+                        .log(`PersonService: Person ID (${successPayload.id}) created`);
+                    this.messageHandler
+                        .log(`PersonService: Created? ${successPayload.success}`);
+                }),
+                catchError(this.messageHandler.handleError<Success>('PersonService: error'))
+            );
+    }
 }

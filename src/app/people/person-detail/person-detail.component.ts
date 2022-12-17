@@ -25,9 +25,13 @@ export class PersonDetailComponent {
     ) {}
 
 
+    isCreateUser = (this.router.url == '/person/create');
+
     personForm = this.fb.group({
         firstName: [null, Validators.required],
         lastName: [null, Validators.required],
+        password: [null, Validators.required],
+        email: [null, Validators.required],
         address: [null, Validators.required],
         city: [null, Validators.required],
         state: [null, Validators.required],
@@ -100,7 +104,11 @@ export class PersonDetailComponent {
     ];
 
     ngOnInit(): void {
-        this.getPerson();
+        if (!this.isCreateUser) {
+            this.getPerson();
+        }
+        this.messageHandler
+            .log(`Router.URL: ${this.router.url}`);
     }
 
     @Input() person = {} as Person;
@@ -117,17 +125,32 @@ export class PersonDetailComponent {
 
     onSubmit(): void {
         const id = String(this.route.snapshot.paramMap.get('id'));
-        this.peopleService.updatePerson(id, this.person)
-            .subscribe(result => {
-                if (result.success) {
-                    this.messageHandler
-                        .log(`Update Person: Successful Update, redirecting to all people.`);
-                    this.router.navigate(['/people']);
-                } else {
-                    this.messageHandler
-                        .log(`Update Person: Message: ${result.message}`);
-                }
-            });
+        if (this.isCreateUser) {
+            this.peopleService.createPerson(this.person)
+                .subscribe(result => {
+                    if (result.success) {
+                        this.messageHandler
+                            .log(`Create Person: Success, redirecting to all people.`);
+                        this.router.navigate(['/people']);
+                    } else {
+                        this.messageHandler
+                            .log(`Create Person: Error: ${result.message}`);
+                    }
+                });
+        } else {
+            this.peopleService.updatePerson(id, this.person)
+                .subscribe(result => {
+                    if (result.success) {
+                        this.messageHandler
+                            .log(`Update Person: Successful Update, redirecting to all people.`);
+                        this.router.navigate(['/people']);
+                    } else {
+                        this.messageHandler
+                            .log(`Update Person: Error: ${result.message}`);
+                    }
+                });
+        }
+
     }
 
 }

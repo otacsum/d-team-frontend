@@ -1,4 +1,6 @@
 export interface Success {
-    success: boolean;
+    id?: string;
+    createdAt?: string;
+    success?: boolean;
     message?: string;
 }
