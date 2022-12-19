@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Person } from '../interfaces/person.interface';
-import { PeopleService } from '../people/people.service';
+import { PersonService } from '../people/person.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,14 +12,14 @@ import { PeopleService } from '../people/people.service';
 export class DashboardComponent implements OnInit {
   people: Person[] = [];
 
-  constructor(private peopleService: PeopleService) { }
+  constructor(private peopleService: PersonService) { }
 
   ngOnInit(): void {
     this.getPeople();
   }
 
   getPeople(): void {
-    this.peopleService.getPeople()
+    this.peopleService.findAll()
       .subscribe(people => this.people = people.slice(1, 3));
   }
 

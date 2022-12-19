@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 import {Person} from '../interfaces/person.interface';
-import {PeopleService} from './people.service';
+import {PersonService} from './person.service';
 
 
 @Component({
@@ -21,7 +21,7 @@ import {PeopleService} from './people.service';
 export class PeopleComponent {
 
     constructor(
-        private peopleService: PeopleService,
+        private peopleService: PersonService,
     ) {}
 
     people: Person[] = [];
@@ -34,7 +34,7 @@ export class PeopleComponent {
     }
 
     getPeople(): void {
-        this.peopleService.getPeople()
+        this.peopleService.findAll()
             .subscribe(people => this.people = people);
     }
 }

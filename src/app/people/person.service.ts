@@ -13,7 +13,7 @@ import { MessageHandler } from '../lib/message-handler';
     providedIn: 'root'
 })
 
-export class PeopleService {
+export class PersonService {
     constructor(
         private messageHandler: MessageHandler,
         private http: HttpClient,
@@ -21,7 +21,7 @@ export class PeopleService {
 
     private personUrl = Environment.apiBaseUrl + '/person';
 
-    getPeople(): Observable<Person[]> {
+    findAll(): Observable<Person[]> {
         return this.http.get<Person[]>(this.personUrl)
             .pipe(
                 tap(_ => this.messageHandler.log('PersonService: fetched people')),
@@ -29,7 +29,7 @@ export class PeopleService {
             );
     }
 
-    getPerson(id: string): Observable<Person> {
+    findOne(id: string): Observable<Person> {
         return this.http.get<Person>(this.personUrl + `/${id}`)
             .pipe(
                 tap(_ => this.messageHandler.log(`PersonService: fetched person ${id}`)),
@@ -37,7 +37,7 @@ export class PeopleService {
             );
     }
 
-    updatePerson(id: string, person: Person): Observable<Success> {
+    update(id: string, person: Person): Observable<Success> {
         return this.http.patch<Success>(this.personUrl + `/${id}`, person)
             .pipe(
                 tap((successPayload: Success) => {
@@ -50,7 +50,7 @@ export class PeopleService {
             );
     }
 
-    createPerson(person: Person): Observable<Success> {
+    create(person: Person): Observable<Success> {
         return this.http.post<Success>(this.personUrl, person)
             .pipe(
                 tap((successPayload: Success) => {

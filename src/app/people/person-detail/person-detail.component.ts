@@ -5,7 +5,7 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {Person} from '../../interfaces/person.interface';
-import {PeopleService} from '../people.service';
+import {PersonService} from '../person.service';
 import {MessageHandler} from '../../lib/message-handler';
 
 @Component({
@@ -17,7 +17,7 @@ export class PersonDetailComponent {
 
     constructor(
         private route: ActivatedRoute,
-        private peopleService: PeopleService,
+        private peopleService: PersonService,
         private location: Location,
         private fb: FormBuilder,
         private messageHandler: MessageHandler,
@@ -115,7 +115,7 @@ export class PersonDetailComponent {
 
     getPerson(): void {
         const id = String(this.route.snapshot.paramMap.get('id'));
-        this.peopleService.getPerson(id)
+        this.peopleService.findOne(id)
             .subscribe(person => this.person = person);
     }
 
@@ -126,7 +126,7 @@ export class PersonDetailComponent {
     onSubmit(): void {
         const id = String(this.route.snapshot.paramMap.get('id'));
         if (this.isCreateUser) {
-            this.peopleService.createPerson(this.person)
+            this.peopleService.create(this.person)
                 .subscribe(result => {
                     if (result.success) {
                         this.messageHandler
@@ -138,7 +138,7 @@ export class PersonDetailComponent {
                     }
                 });
         } else {
-            this.peopleService.updatePerson(id, this.person)
+            this.peopleService.update(id, this.person)
                 .subscribe(result => {
                     if (result.success) {
                         this.messageHandler
