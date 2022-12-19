@@ -21,6 +21,19 @@ export class PersonService {
 
     private personUrl = Environment.apiBaseUrl + '/person';
 
+    create(person: Person): Observable<Success> {
+        return this.http.post<Success>(this.personUrl, person)
+            .pipe(
+                tap((successPayload: Success) => {
+                    this.messageHandler
+                        .log(`PersonService: Person ID (${successPayload.id}) created`);
+                    this.messageHandler
+                        .log(`PersonService: Created? ${successPayload.success}`);
+                }),
+                catchError(this.messageHandler.handleError<Success>('PersonService: create'))
+            );
+    }
+
     findAll(): Observable<Person[]> {
         return this.http.get<Person[]>(this.personUrl)
             .pipe(
@@ -33,7 +46,7 @@ export class PersonService {
         return this.http.get<Person>(this.personUrl + `/${id}`)
             .pipe(
                 tap(_ => this.messageHandler.log(`PersonService: fetched person ${id}`)),
-                catchError(this.messageHandler.handleError<Person>('PersonService: getPerson'))
+                catchError(this.messageHandler.handleError<Person>('PersonService: findOne'))
             );
     }
 
@@ -50,16 +63,16 @@ export class PersonService {
             );
     }
 
-    create(person: Person): Observable<Success> {
-        return this.http.post<Success>(this.personUrl, person)
-            .pipe(
-                tap((successPayload: Success) => {
-                    this.messageHandler
-                        .log(`PersonService: Person ID (${successPayload.id}) created`);
-                    this.messageHandler
-                        .log(`PersonService: Created? ${successPayload.success}`);
-                }),
-                catchError(this.messageHandler.handleError<Success>('PersonService: error'))
-            );
+    removePerson(id: string): Observable<Success> {
+        return this.http.delete<Person>(this.personUrl + `/${id}`)
+        .pipe(
+            tap((successPayload: Success) => {
+                this.messageHandler
+                    .log(`PersonService: Remove ID (${id}) sent`);
+                this.messageHandler
+                    .log(`PersonService: Successfully deactivated person ${id}`);
+            }),
+            catchError(this.messageHandler.handleError<Success>('PersonService: error'))
+        );
     }
 }

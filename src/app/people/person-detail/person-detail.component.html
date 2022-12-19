@@ -40,7 +40,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row" *ngIf="isCreateUser || (person.email.indexOf('@test.test') < 0);else test_user">
+                <div class="row" *ngIf="!isCreateUser && (person.email.indexOf('@test.test') < 0);else test_user">
                     <div class="col"><mat-form-field class="full-width">
                             <input matInput placeholder="name@example.com" formControlName="email"
                                 [(ngModel)]="person.email">
