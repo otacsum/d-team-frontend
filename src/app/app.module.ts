@@ -17,6 +17,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 // Components
 import {AppComponent} from './app.component';
+import {CoursesComponent} from './classes/courses.component';
+import {CourseDetailComponent} from './classes/course-detail/course-detail.component';
 import {PeopleComponent} from './people/people.component';
 import {PersonDetailComponent} from './people/person-detail/person-detail.component';
 import {MessagesComponent} from './messages/messages.component';
@@ -28,6 +30,8 @@ import {ConfirmDeleteComponent} from './confirm-delete/confirm-delete.component'
 @NgModule({
     declarations: [
         AppComponent,
+        CoursesComponent,
+        CourseDetailComponent,
         PeopleComponent,
         PersonDetailComponent,
         MessagesComponent,
