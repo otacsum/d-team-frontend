@@ -42,6 +42,14 @@ export class PersonService {
             );
     }
 
+    findAllTeachers(): Observable<Person[]>  {
+        return this.http.get<Person[]>(this.personUrl + '/type/teacher')
+            .pipe(
+                tap(_ => this.messageHandler.log('PersonService: fetched people')),
+                catchError(this.messageHandler.handleError<Person[]>('PersonService: getPeople', []))
+            );
+    }
+
     findOne(id: string): Observable<Person> {
         return this.http.get<Person>(this.personUrl + `/${id}`)
             .pipe(

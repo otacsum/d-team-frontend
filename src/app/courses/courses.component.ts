@@ -7,9 +7,6 @@ import {CourseService} from './course.service';
 import {ConfirmDeleteComponent} from '../confirm-delete/confirm-delete.component';
 import {MatTableDataSource} from '@angular/material/table';
 
-
-
-
 @Component({
     selector: 'app-courses',
     templateUrl: './courses.component.html',
@@ -37,10 +34,10 @@ export class CoursesComponent {
     dataSource = {} as MatTableDataSource<Course>;
 
     ngOnInit(): void {
-        this.getPeople();
+        this.getCourses();
     }
 
-    getPeople(): void {
+    getCourses(): void {
         this.courseService.findAll()
             .subscribe(course => {
                 this.course = course;
@@ -48,8 +45,8 @@ export class CoursesComponent {
             });
     }
 
-    removePerson(id: string): void {
-        this.courseService.removePerson(id)
+    removeCourse(id: string): void {
+        this.courseService.removeCourse(id)
             .subscribe(result => result = result);
     }
 
@@ -67,7 +64,7 @@ export class CoursesComponent {
 
         dialogRef.afterClosed().subscribe(confirmed => {
             if (confirmed) {
-                this.removePerson(id);
+                this.removeCourse(id);
             }
         });
     }

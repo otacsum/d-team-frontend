@@ -26,7 +26,11 @@
     </ng-container>
 
     <ng-container matColumnDef="expand">
-        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+            <button mat-icon-button aria-label="create course" routerLink="/course/create">
+                <mat-icon fontIcon="note_add"></mat-icon>
+            </button>
+        </th>
         <td mat-cell *matCellDef="let course">
             <button mat-icon-button aria-label="expand row"
                 (click)="(expandedCourse = expandedCourse === course ? null : course); $event.stopPropagation()">
@@ -56,7 +60,7 @@
 
                     <div class="detail-header">Dates:</div>
                     <div class="detail-content">Starts: {{course.start_date}}</div>
-                    <div class="detail-content">Starts: {{course.end_date}}</div>
+                    <div class="detail-content">Ends: {{course.end_date}}</div>
 
                     <div class="detail-header">Description:</div>
                     <div class="detail-content">{{course.description}}</div>

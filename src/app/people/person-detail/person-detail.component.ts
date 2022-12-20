@@ -25,7 +25,9 @@ export class PersonDetailComponent {
     ) {}
 
 
-    isCreateUser = (this.router.url == '/person/create');
+    isNewUser = (this.router.url == '/person/create');
+
+    hidePassword = true;
 
     personForm = this.fb.group({
         firstName: [null, Validators.required],
@@ -104,7 +106,7 @@ export class PersonDetailComponent {
     ];
 
     ngOnInit(): void {
-        if (!this.isCreateUser) {
+        if (!this.isNewUser) {
             this.getPerson();
         }
         this.messageHandler
@@ -123,9 +125,9 @@ export class PersonDetailComponent {
         this.location.back();
     }
 
-    onSubmit(): void {
+    submit(): void {
         const id = String(this.route.snapshot.paramMap.get('id'));
-        if (this.isCreateUser) {
+        if (this.isNewUser) {
             this.peopleService.create(this.person)
                 .subscribe(result => {
                     if (result.success) {

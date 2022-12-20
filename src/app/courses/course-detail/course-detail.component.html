@@ -1,0 +1,94 @@
+<div>
+    <form [formGroup]="courseForm" novalidate (ngSubmit)="onSubmit()">
+        <mat-card>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Subject Area</mat-label>
+                            <mat-select formControlName="subjectAbbreviation" [(value)]="course.subject_abbreviation"
+                                [ngModel]="course.subject_abbreviation">
+                                <mat-option *ngFor="let subject of subjects" [value]="subject.abbreviation">
+                                    {{ subject.name }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="courseForm.controls['subjectAbbreviation'].hasError('required')">
+                                Subject area is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Subject Code</mat-label>
+                            <input matInput type="number" #subjectCode formControlName="code" [(ngModel)]="course.code">
+                            <mat-hint align="start">3-Digits: {{subjectCode.value.length}} / 3</mat-hint>
+                            <mat-error *ngIf="courseForm.controls['code'].hasError('required')">
+                                Subject code is <strong>required</strong> and must be a number.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Instructor</mat-label>
+                            <mat-select formControlName="teacher" [(value)]="course.person_id"
+                                [ngModel]="course.person_id">
+                                <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+                                    {{ teacher.first_name}} {{ teacher.last_name}}
+                                </mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="courseForm.controls['teacher'].hasError('required')">
+                                Instructor is <strong>required</strong>
+                            </mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Dates</mat-label>
+                            <mat-date-range-input [rangePicker]="picker">
+                                <input matStartDate [(ngModel)]="course.start_date" formControlName="startDate" placeholder="Start date">
+                                <input matEndDate [(ngModel)]="course.end_date" formControlName="endDate" placeholder="End date">
+                            </mat-date-range-input>
+                            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Course Title</mat-label>
+                            <input matInput formControlName="title" [(ngModel)]="course.title">
+                            <mat-error *ngIf="courseForm.controls['title'].hasError('required')">
+                                Course title is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description"
+                                [(ngModel)]="course.description"></textarea>
+                            <mat-error *ngIf="courseForm.controls['description'].hasError('required')">
+                                Course description is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button class="formButton" color="primary" type="button"
+                    (click)="goBack()">Cancel</button>
+                <button mat-raised-button class="formButton" color="primary" type="submit">Submit</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>

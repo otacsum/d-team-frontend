@@ -41,7 +41,7 @@ tr.person-row:not(.example-expanded-row):active {
     margin-top: 10px;
 }
 
-td button {
+td button, th button {
     margin-left: 25px;
 }
 

@@ -5,7 +5,6 @@ import {catchError, map, tap} from 'rxjs/operators';
 
 import {Environment} from 'src/environment/environment';
 import {Course} from '../interfaces/course.interface';
-//import {People} from '../interfaces/people.mock';
 import {Success} from '../interfaces/success.interface';
 import { MessageHandler } from '../lib/message-handler';
 
@@ -31,7 +30,7 @@ export class CourseService {
                     this.messageHandler
                         .log(`${this.serviceLoggingName}: Created? ${successPayload.success}`);
                 }),
-                catchError(this.messageHandler.handleError<Success>(`${this.serviceLoggingName}: create`))
+                catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: create`))
             );
     }
 
@@ -39,15 +38,15 @@ export class CourseService {
         return this.http.get<Course[]>(this.courseUrl)
             .pipe(
                 tap(_ => this.messageHandler.log(`${this.serviceLoggingName}: fetched courses`)),
-                catchError(this.messageHandler.handleError<Course[]>(`${this.serviceLoggingName}: getPeople`, []))
+                catchError(this.messageHandler.handleError<Course[]>(`ERROR in ${this.serviceLoggingName}: findAll`, []))
             );
     }
 
     findOne(id: string): Observable<Course> {
         return this.http.get<Course>(this.courseUrl + `/${id}`)
             .pipe(
-                tap(_ => this.messageHandler.log(`${this.serviceLoggingName}: fetched ${id}`)),
-                catchError(this.messageHandler.handleError<Course>(`${this.serviceLoggingName}: findOne`))
+                tap(_ => this.messageHandler.log(`${this.serviceLoggingName}: fetched course ${id}`)),
+                catchError(this.messageHandler.handleError<Course>(`ERROR in ${this.serviceLoggingName}: findOne`))
             );
     }
 
@@ -60,11 +59,11 @@ export class CourseService {
                     this.messageHandler
                         .log(`${this.serviceLoggingName}: Updated Successfully? ${successPayload.success}`);
                 }),
-                catchError(this.messageHandler.handleError<Success>(`${this.serviceLoggingName}: error`))
+                catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: error`))
             );
     }
 
-    removePerson(id: string): Observable<Success> {
+    removeCourse(id: string): Observable<Success> {
         return this.http.delete<Course>(this.courseUrl + `/${id}`)
         .pipe(
             tap((successPayload: Success) => {
@@ -73,7 +72,7 @@ export class CourseService {
                 this.messageHandler
                     .log(`${this.serviceLoggingName}: Successfully deactivated ${id}`);
             }),
-            catchError(this.messageHandler.handleError<Success>(`${this.serviceLoggingName}: error`))
+            catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: error`))
         );
     }
 }

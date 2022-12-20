@@ -14,11 +14,14 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+//import {MatMomentDateModule} from '@angular/material/moment';
+import {MatNativeDateModule} from '@angular/material/core';
 
 // Components
 import {AppComponent} from './app.component';
-import {CoursesComponent} from './classes/courses.component';
-import {CourseDetailComponent} from './classes/course-detail/course-detail.component';
+import {CoursesComponent} from './courses/courses.component';
+import {CourseDetailComponent} from './courses/course-detail/course-detail.component';
 import {PeopleComponent} from './people/people.component';
 import {PersonDetailComponent} from './people/person-detail/person-detail.component';
 import {MessagesComponent} from './messages/messages.component';
@@ -53,7 +56,10 @@ import {ConfirmDeleteComponent} from './confirm-delete/confirm-delete.component'
         MatCardModule,
         ReactiveFormsModule,
         MatTableModule,
-        MatDialogModule
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        //MatMomentDateModule,
     ],
     providers: [
     ],
