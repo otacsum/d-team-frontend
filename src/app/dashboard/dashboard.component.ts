@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Person } from '../interfaces/person.interface';
 import { PersonService } from '../people/person.service';
+import {Course} from '../interfaces/course.interface';
+import {CourseService} from '../courses/course.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,12 +12,18 @@ import { PersonService } from '../people/person.service';
 })
 
 export class DashboardComponent implements OnInit {
-  people: Person[] = [];
 
-  constructor(private peopleService: PersonService) { }
+  people: Person[] = [];
+  courses: Course[] = [];
+
+  constructor(
+    private peopleService: PersonService,
+    private courseService: CourseService,
+    ) { }
 
   ngOnInit(): void {
-    this.getPeople();
+    //this.getPeople();
+    this.getCourses();
   }
 
   getPeople(): void {
@@ -23,5 +31,8 @@ export class DashboardComponent implements OnInit {
       .subscribe(people => this.people = people.slice(1, 3));
   }
 
-  sampleLorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
+  getCourses(): void {
+    this.courseService.findAll()
+      .subscribe(courses => this.courses = courses.slice(0, 4));
+  }
 }
