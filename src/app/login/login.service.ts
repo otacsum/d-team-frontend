@@ -28,6 +28,13 @@ export class LoginService {
                         .log(`LoginService: ${login.email} credentials sent`);
                     this.messageHandler
                         .log(`LoginService: Credentials Valid: ${loginSuccess.success}`);
+
+                    if (loginSuccess.person && loginSuccess.person.is_active) {
+                        sessionStorage.setItem('loggedIn', `${loginSuccess.success}`);
+                        sessionStorage.setItem('userId', `${loginSuccess.person.id}`);
+                        sessionStorage.setItem('userRole', `${loginSuccess.person.type}`);
+                    }
+
                 }),
                 catchError(this.messageHandler.handleError<Success>('LoginService: error'))
             );

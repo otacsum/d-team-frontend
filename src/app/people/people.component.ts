@@ -6,6 +6,7 @@ import {Person} from '../interfaces/person.interface';
 import {PersonService} from './person.service';
 import {ConfirmDeleteComponent} from '../confirm-delete/confirm-delete.component';
 import {MatTableDataSource} from '@angular/material/table';
+import {SessionHandler} from '../lib/session-handler';
 
 
 
@@ -27,7 +28,8 @@ export class PeopleComponent {
 
     constructor(
         private personService: PersonService,
-        public dialog: MatDialog
+        public dialog: MatDialog, 
+        public sessionHandler: SessionHandler,
     ) {}
     
     people: Person[] = [];

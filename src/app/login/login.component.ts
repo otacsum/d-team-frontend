@@ -41,7 +41,8 @@ export class LoginComponent {
                 .subscribe(result => {
                     if (result.success) {
                         this.isError = false;
-                        this.router.navigate(['/']);
+                        //this.router.navigate(['/dashboard']);
+                        window.location.href = '/dashboard';
                     } else {
                         this.isError = true;
                     }

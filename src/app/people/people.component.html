@@ -27,7 +27,7 @@
 
     <ng-container matColumnDef="expand">
         <th mat-header-cell *matHeaderCellDef aria-label="row actions">
-            <button mat-icon-button aria-label="create person" routerLink="/person/create">
+            <button *ngIf="(sessionHandler.userRole == 'administrator')" mat-icon-button aria-label="create person" routerLink="/person/create">
                 <mat-icon fontIcon="person_add"></mat-icon>
             </button>
         </th>
@@ -38,11 +38,11 @@
                 <mat-icon *ngIf="expandedPerson === person">keyboard_arrow_up</mat-icon>
             </button>
 
-            <button mat-icon-button routerLink="/person/detail/{{person.id}}" aria-label="edit person">
+            <button *ngIf="(sessionHandler.userId == person.id || sessionHandler.userRole == 'administrator')" mat-icon-button routerLink="/person/detail/{{person.id}}" aria-label="edit person">
                 <mat-icon fontIcon="edit"></mat-icon>
             </button>
 
-            <button mat-icon-button aria-label="delete person"
+            <button *ngIf="(sessionHandler.userRole == 'administrator')" mat-icon-button aria-label="delete person"
                 (click)='openDialog(person.id, "Remove " + person.first_name + " " + person.last_name + "?"); $event.stopPropagation()'>
                 <mat-icon fontIcon="delete"></mat-icon>
             </button>

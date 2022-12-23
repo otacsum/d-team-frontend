@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Input, Inject} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
@@ -6,6 +6,7 @@ import {Course} from '../interfaces/course.interface';
 import {CourseService} from './course.service';
 import {ConfirmDeleteComponent} from '../confirm-delete/confirm-delete.component';
 import {MatTableDataSource} from '@angular/material/table';
+import {SessionHandler} from '../lib/session-handler';
 
 @Component({
     selector: 'app-courses',
@@ -24,7 +25,8 @@ export class CoursesComponent {
 
     constructor(
         private courseService: CourseService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        public sessionHandler: SessionHandler,
     ) {}
     
     course: Course[] = [];
