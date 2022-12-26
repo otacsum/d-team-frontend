@@ -27,7 +27,8 @@
 
     <ng-container matColumnDef="expand">
         <th mat-header-cell *matHeaderCellDef aria-label="row actions">
-            <button *ngIf="(sessionHandler.userRole == 'administrator')" mat-icon-button aria-label="create course" routerLink="/course/create">
+            <button *ngIf="(sessionHandler.userRole == 'administrator')" mat-icon-button aria-label="create course"
+                routerLink="/course/create">
                 <mat-icon fontIcon="note_add"></mat-icon>
             </button>
         </th>
@@ -38,12 +39,25 @@
                 <mat-icon *ngIf="expandedCourse === course">keyboard_arrow_up</mat-icon>
             </button>
 
-            <button *ngIf="(sessionHandler.userId == course.person_id || sessionHandler.userRole == 'administrator')" mat-icon-button routerLink="/course/detail/{{course.id}}" aria-label="edit course">
+            <button *ngIf="(sessionHandler.userId == course.person_id || sessionHandler.userRole == 'administrator')"
+                mat-icon-button routerLink="/course/detail/{{course.id}}" aria-label="edit course">
                 <mat-icon fontIcon="edit"></mat-icon>
             </button>
 
-            <button *ngIf="(sessionHandler.userId == course.person_id || sessionHandler.userRole == 'administrator')" mat-icon-button aria-label="delete course"
-                (click)='openDialog(course.id, "Remove " + course.subject_abbreviation + " " + course.code + "?"); $event.stopPropagation()'>
+            <button *ngIf="(sessionHandler.userRole == 'student' && +course.student_count < 20 && course.students.indexOf(sessionHandler.userId) < 0)" mat-icon-button
+                aria-label="join course"
+                (click)="joinCourse(course.id, course.subject_abbreviation + course.code); $event.stopPropagation()">
+                <mat-icon fontIcon="add_shopping_cart"></mat-icon>
+            </button>
+
+            <button *ngIf="(sessionHandler.userRole == 'student' && +course.student_count >= 20)" mat-icon-button
+                aria-label="course is full">
+                <mat-icon fontIcon="lock"></mat-icon>
+            </button>
+
+            <button *ngIf="(sessionHandler.userId == course.person_id || sessionHandler.userRole == 'administrator')"
+                mat-icon-button aria-label="delete course"
+                (click)='openDialog(course.id, "Are you sure?", "Remove " + course.subject_abbreviation + " " + course.code + "?", "Remove"); $event.stopPropagation()'>
                 <mat-icon fontIcon="delete"></mat-icon>
             </button>
         </td>
@@ -55,21 +69,23 @@
             <div class="course-detail" [@detailExpand]="course == expandedCourse ? 'expanded' : 'collapsed'">
                 <div class="course-properties">
 
-                    <div class="detail-header">{{course.subject_abbreviation}} {{course.code}}</div>
+                    <div class="detail-header">{{course.subject_abbreviation}}{{course.code}}</div>
                     <div class="detail-content">{{course.title}}</div>
 
                     <div class="detail-header">Dates:</div>
                     <div class="detail-content">Starts: {{course.start_date}}</div>
                     <div class="detail-content">Ends: {{course.end_date}}</div>
+                    <div class="detail-content">Registered Students: {{course.student_count}}</div>
 
                     <div class="detail-header">Description:</div>
                     <div class="detail-content">{{course.description}}</div>
 
                     <div class="detail-header">Instructor:</div>
                     <div class="detail-content">{{course.instructor.first_name}} {{course.instructor.last_name}}</div>
-                    <div class="detail-content"><a [href]="course.instructor.email">{{course.instructor.email}}</a></div>
+                    <div class="detail-content"><a [href]="course.instructor.email">{{course.instructor.email}}</a>
+                    </div>
 
-                    <div class="detail-header">Other:</div> 
+                    <div class="detail-header">Other:</div>
                     <div class="detail-content">ID: {{course.id}}</div>
                     <div class="detail-content">Active Course: {{course.is_active}}</div>
                     <div class="detail-content">Created: {{course.createdAt}}</div>

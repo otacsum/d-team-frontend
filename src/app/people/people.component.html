@@ -43,7 +43,7 @@
             </button>
 
             <button *ngIf="(sessionHandler.userRole == 'administrator')" mat-icon-button aria-label="delete person"
-                (click)='openDialog(person.id, "Remove " + person.first_name + " " + person.last_name + "?"); $event.stopPropagation()'>
+                (click)='openDialog(person.id, "Are you sure?", "Remove " + person.first_name + " " + person.last_name + "?", "Delete"); $event.stopPropagation()'>
                 <mat-icon fontIcon="delete"></mat-icon>
             </button>
         </td>

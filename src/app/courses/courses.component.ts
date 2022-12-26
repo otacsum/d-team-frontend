@@ -4,7 +4,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
 import {Course} from '../interfaces/course.interface';
 import {CourseService} from './course.service';
-import {ConfirmDeleteComponent} from '../confirm-delete/confirm-delete.component';
+import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {MatTableDataSource} from '@angular/material/table';
 import {SessionHandler} from '../lib/session-handler';
 
@@ -27,13 +27,13 @@ export class CoursesComponent {
         private courseService: CourseService,
         public dialog: MatDialog,
         public sessionHandler: SessionHandler,
+        public dataSource: MatTableDataSource<Course>,
     ) {}
-    
+
     course: Course[] = [];
     columnsToDisplay = ['subject_abbreviation', 'code', 'title'];
     columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
     expandedCourse = {} as Course;
-    dataSource = {} as MatTableDataSource<Course>;
 
     ngOnInit(): void {
         this.getCourses();
@@ -43,23 +43,48 @@ export class CoursesComponent {
         this.courseService.findAll()
             .subscribe(course => {
                 this.course = course;
-                this.dataSource = new MatTableDataSource(course);                
+                this.dataSource = new MatTableDataSource(course);
             });
+    }
+
+    joinCourse(id: string, courseName: string): void {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            data: {
+                title: 'Join Course?',
+                prompt: `re you sure you want to join ${courseName}`
+            },
+            width: '250px',
+        });
+
+        dialogRef.afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.courseService.joinCourse(id, this.sessionHandler.userId)
+                    .subscribe(result => {
+                        this.ngOnInit();
+                    });
+            }
+        });
+
+
     }
 
     removeCourse(id: string): void {
         this.courseService.removeCourse(id)
-            .subscribe(result => result = result);
+            .subscribe(result => {
+                this.ngOnInit();
+            });
     }
 
     applyFilter(filterValue: String) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    openDialog(id: string, prompt: string): void {
-        const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+    openDialog(id: string, title: string, prompt: string, buttonText: string): void {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             data: {
-                prompt: prompt
+                title: title,
+                prompt: prompt,
+                buttonText: buttonText,
             },
             width: '250px',
         });

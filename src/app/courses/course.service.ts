@@ -75,4 +75,17 @@ export class CourseService {
             catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: error`))
         );
     }
+
+    joinCourse(id: string, studentId: string): Observable<Success> {
+        return this.http.post<Course>(this.courseUrl + `/${id}/students/${studentId}`, null)
+        .pipe(
+            tap((successPayload: Success) => {
+                this.messageHandler
+                    .log(`${this.serviceLoggingName}: Student ${studentId} register for course (${id}) sent`);
+                this.messageHandler
+                    .log(`${this.serviceLoggingName}: Successfully registered to course ${id}`);
+            }),
+            catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: error`))
+        );
+    }
 }

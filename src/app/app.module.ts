@@ -17,6 +17,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 //import {MatMomentDateModule} from '@angular/material/moment';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatTableDataSource} from '@angular/material/table';
 
 // Components
 import {AppComponent} from './app.component';
@@ -28,7 +29,7 @@ import {MessagesComponent} from './messages/messages.component';
 import {AppRoutingModule} from './app-routing.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {LoginComponent} from './login/login.component';
-import {ConfirmDeleteComponent} from './confirm-delete/confirm-delete.component'
+import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component'
 
 @NgModule({
     declarations: [
@@ -40,7 +41,7 @@ import {ConfirmDeleteComponent} from './confirm-delete/confirm-delete.component'
         MessagesComponent,
         DashboardComponent,
         LoginComponent,
-        ConfirmDeleteComponent,
+        ConfirmDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -62,6 +63,7 @@ import {ConfirmDeleteComponent} from './confirm-delete/confirm-delete.component'
         //MatMomentDateModule,
     ],
     providers: [
+        MatTableDataSource,
     ],
     bootstrap: [AppComponent]
 })

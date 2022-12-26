@@ -1,10 +1,11 @@
 import {Component, Inject} from '@angular/core';
+import {Observable} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
 import {Person} from '../interfaces/person.interface';
 import {PersonService} from './person.service';
-import {ConfirmDeleteComponent} from '../confirm-delete/confirm-delete.component';
+import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {MatTableDataSource} from '@angular/material/table';
 import {SessionHandler} from '../lib/session-handler';
 
@@ -30,13 +31,13 @@ export class PeopleComponent {
         private personService: PersonService,
         public dialog: MatDialog, 
         public sessionHandler: SessionHandler,
+        public dataSource: MatTableDataSource<Person>,
     ) {}
     
     people: Person[] = [];
     columnsToDisplay = ['first_name', 'last_name', 'type'];
     columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
     expandedPerson = {} as Person;
-    dataSource = {} as MatTableDataSource<Person>;
 
     ngOnInit(): void {
         this.getPeople();
@@ -52,17 +53,21 @@ export class PeopleComponent {
 
     removePerson(id: string): void {
         this.personService.removePerson(id)
-            .subscribe(result => result = result);
+            .subscribe(result => {
+                this.ngOnInit();
+            });
     }
 
     applyFilter(filterValue: String) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    openDialog(id: string, prompt: string): void {
-        const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+    openDialog(id: string, title: string, prompt: string, buttonText: string): void {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             data: {
-                prompt: prompt
+                title: title,
+                prompt: prompt,
+                buttonText: buttonText,
             },
             width: '250px',
         });
