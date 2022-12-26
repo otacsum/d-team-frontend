@@ -6,12 +6,9 @@
     <a *ngIf="sessionHandler.loggedIn" routerLink="/people">Students & Staff</a>
     <a *ngIf="!sessionHandler.loggedIn" routerLink="/person/create">Register</a>
     <a *ngIf="!sessionHandler.loggedIn" routerLink="/login">Log In</a>
+    <a *ngIf="sessionHandler.loggedIn" routerLink="/person/detail/{{sessionHandler.userId}}">Profile</a>
     <a *ngIf="sessionHandler.loggedIn" (click)="sessionHandler.logOut()">Log Out</a>
 </nav>
-<div *ngIf="sessionHandler.loggedIn">
-    <div>User ID: {{sessionHandler.userId}}</div>
-    <div>Role: {{sessionHandler.userRole}}</div>
-</div>
 
 <router-outlet></router-outlet>
 <app-messages></app-messages>

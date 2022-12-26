@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {Person} from '../../interfaces/person.interface';
 import {PersonService} from '../person.service';
 import {MessageHandler} from '../../lib/message-handler';
+import {SessionHandler} from '../../lib/session-handler';
 
 @Component({
     selector: 'app-person-detail',
@@ -21,6 +22,7 @@ export class PersonDetailComponent {
         private location: Location,
         private fb: FormBuilder,
         private messageHandler: MessageHandler,
+        public sessionHandler: SessionHandler,
         private router: Router,
     ) {}
 

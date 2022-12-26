@@ -5,9 +5,9 @@ import {Injectable} from '@angular/core';
 })
 
 export class SessionHandler {
-    loggedIn = false;
-    userId: string = '';
-    userRole: string = 'guest';
+    public loggedIn: boolean = false;
+    public userId: string = '';
+    public userRole: string = 'guest';
 
     constructor() {
         if (!sessionStorage.getItem('loggedIn')) {

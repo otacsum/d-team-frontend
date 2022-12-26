@@ -30,6 +30,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {LoginComponent} from './login/login.component';
 import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component'
+import {StudentCoursesComponent} from './student-courses/student-courses.component';
+import {TeacherCredentialComponent} from './teacher-credentials/teacher-credential.component';
+import {TeacherCredentialDetailComponent} from './teacher-credentials/teacher-credential-detail/teacher-credential-detail.component';
 
 @NgModule({
     declarations: [
@@ -42,6 +45,9 @@ import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component'
         DashboardComponent,
         LoginComponent,
         ConfirmDialogComponent,
+        StudentCoursesComponent,
+        TeacherCredentialComponent,
+        TeacherCredentialDetailComponent,
     ],
     imports: [
         BrowserModule,

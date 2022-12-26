@@ -1,0 +1,78 @@
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($any($event.target).value)"
+        placeholder="Search for a course ID, Description, Instructor, etc..." #input>
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+        <th mat-header-cell *matHeaderCellDef> {{column | uppercase}} </th>
+        <td mat-cell *matCellDef="let studentCourse"> {{studentCourse.course[column]}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expand">
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+        </th>
+        <td mat-cell *matCellDef="let studentCourse">
+            <ng-container *ngIf="showCourses == 'all'">
+                <button mat-icon-button aria-label="expand row"
+                    (click)="(expandedCourse = expandedCourse === studentCourse ? null : studentCourse); $event.stopPropagation()">
+                    <mat-icon *ngIf="expandedCourse !== studentCourse">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="expandedCourse === studentCourse">keyboard_arrow_up</mat-icon>
+                </button>
+
+                <button
+                    mat-icon-button aria-label="drop course"
+                    (click)='openDialog(studentCourse.id, "Are you sure?", "Drop " + studentCourse.course.subject_abbreviation + " " + studentCourse.course.code + "?", "Drop this Course"); $event.stopPropagation()'>
+                    <mat-icon fontIcon="output"></mat-icon>
+                </button>
+            </ng-container>
+        </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let studentCourse" [attr.colspan]="columnsToDisplayWithExpand.length">
+            <div class="course-detail" [@detailExpand]="studentCourse == expandedCourse ? 'expanded' : 'collapsed'">
+                <div class="course-properties">
+
+                    <div class="detail-header">{{studentCourse.course.subject_abbreviation}}{{studentCourse.course.code}}</div>
+                    <div class="detail-content">{{studentCourse.course.title}}</div>
+
+                    <div class="detail-header">Dates:</div>
+                    <div class="detail-content">Starts: {{studentCourse.course.start_date}}</div>
+                    <div class="detail-content">Ends: {{studentCourse.course.end_date}}</div>
+                    <div class="detail-content">Registered Students: {{studentCourse.course.student_count}}</div>
+
+                    <div class="detail-header">Description:</div>
+                    <div class="detail-content">{{studentCourse.course.description}}</div>
+
+                    <div class="detail-header">Instructor:</div>
+                    <div class="detail-content">{{studentCourse.course.instructor.first_name}} {{studentCourse.course.instructor.last_name}}</div>
+                    <div class="detail-content"><a [href]="studentCourse.course.instructor.email">{{studentCourse.course.instructor.email}}</a>
+                    </div>
+
+                    <div class="detail-header">Other:</div>
+                    <div class="detail-content">ID: {{studentCourse.course.id}}</div>
+                    <div class="detail-content">Active Course: {{studentCourse.course.is_active}}</div>
+                    <div class="detail-content">Created: {{studentCourse.course.createdAt}}</div>
+                    <div class="detail-content">Last Updated: {{studentCourse.course.updatedAt}}</div>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+    <tr mat-row *matRowDef="let studentCourse; columns: columnsToDisplayWithExpand;" class="person-row"
+        [class.expanded-row]="expandedCourse === studentCourse"
+        (click)="expandedCourse = expandedCourse === studentCourse ? null : studentCourse">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="columnsToDisplayWithExpand.length">No data matching the filter
+            "{{input.value}}"</td>
+    </tr>
+</table>

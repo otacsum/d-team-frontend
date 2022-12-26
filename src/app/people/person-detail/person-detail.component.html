@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="sessionHandler.loggedIn">
     <form [formGroup]="personForm" novalidate>
         <mat-card>
             <mat-card-content>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <mat-radio-group formControlName="role" [(ngModel)]="person.type">
+                        <mat-radio-group [hidden]="!(sessionHandler.userRole == 'administrator')" formControlName="role" [(ngModel)]="person.type">
                             <mat-radio-button value="student">Student</mat-radio-button>
                             <mat-radio-button value="teacher">Teacher</mat-radio-button>
                             <mat-radio-button value="administrator">Administrator</mat-radio-button>
@@ -132,4 +132,17 @@
             </mat-card-actions>
         </mat-card>
     </form>
+</div>
+
+<div *ngIf="sessionHandler.loggedIn && (sessionHandler.userRole == 'teacher')">
+    <h2>My Courses</h2>
+    <app-courses [showCourses]="'teacher'"></app-courses>
+
+    <h2>My Credentials</h2>
+    <app-teacher-credential></app-teacher-credential>
+</div>
+
+<div *ngIf="sessionHandler.loggedIn && (sessionHandler.userRole == 'student')">
+    <h2>My Courses</h2>
+    <app-student-courses></app-student-courses>
 </div>

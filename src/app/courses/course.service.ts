@@ -26,7 +26,7 @@ export class CourseService {
             .pipe(
                 tap((successPayload: Success) => {
                     this.messageHandler
-                        .log(`${this.serviceLoggingName}: Course ID (${successPayload.id}) created`);
+                        .log(`${this.serviceLoggingName}: ID (${successPayload.id}) created`);
                     this.messageHandler
                         .log(`${this.serviceLoggingName}: Created? ${successPayload.success}`);
                 }),
@@ -39,6 +39,14 @@ export class CourseService {
             .pipe(
                 tap(_ => this.messageHandler.log(`${this.serviceLoggingName}: fetched courses`)),
                 catchError(this.messageHandler.handleError<Course[]>(`ERROR in ${this.serviceLoggingName}: findAll`, []))
+            );
+    }
+
+    findAllByTeacher(id: string): Observable<Course[]> {
+        return this.http.get<Course[]>(this.courseUrl + `/teacher/${id}`)
+            .pipe(
+                tap(_ => this.messageHandler.log(`${this.serviceLoggingName}: fetched courses for teacher ${id}`)),
+                catchError(this.messageHandler.handleError<Course[]>(`ERROR in ${this.serviceLoggingName}: findAllByTeacher`, []))
             );
     }
 
@@ -63,7 +71,7 @@ export class CourseService {
             );
     }
 
-    removeCourse(id: string): Observable<Success> {
+    remove(id: string): Observable<Success> {
         return this.http.delete<Course>(this.courseUrl + `/${id}`)
         .pipe(
             tap((successPayload: Success) => {

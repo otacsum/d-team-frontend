@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 
 import {MessageService} from './message.service';
+import { SessionHandler } from '../lib/session-handler';
 
 @Component({
     selector: 'app-messages',
@@ -10,7 +11,8 @@ import {MessageService} from './message.service';
 
 export class MessagesComponent {
     constructor(
-        public messageService: MessageService
+        public messageService: MessageService,
+        public sessionHandler: SessionHandler
     ) {}
 
 }

@@ -23,6 +23,9 @@ import {SessionHandler} from '../lib/session-handler';
 
 export class CoursesComponent {
 
+    @Input()
+    showCourses: string = 'all';
+
     constructor(
         private courseService: CourseService,
         public dialog: MatDialog,
@@ -40,18 +43,26 @@ export class CoursesComponent {
     }
 
     getCourses(): void {
-        this.courseService.findAll()
-            .subscribe(course => {
-                this.course = course;
-                this.dataSource = new MatTableDataSource(course);
-            });
+        if (this.showCourses == 'all') {
+            this.courseService.findAll()
+                .subscribe(course => {
+                    this.course = course;
+                    this.dataSource = new MatTableDataSource(course);
+                });
+        } else if (this.showCourses == 'teacher') {
+            this.courseService.findAllByTeacher(this.sessionHandler.userId)
+                .subscribe(course => {
+                    this.course = course;
+                    this.dataSource = new MatTableDataSource(course);
+                });
+        }
     }
 
     joinCourse(id: string, courseName: string): void {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             data: {
                 title: 'Join Course?',
-                prompt: `re you sure you want to join ${courseName}`
+                prompt: `Are you sure you want to join ${courseName}`
             },
             width: '250px',
         });
@@ -69,10 +80,20 @@ export class CoursesComponent {
     }
 
     removeCourse(id: string): void {
-        this.courseService.removeCourse(id)
+        this.courseService.remove(id)
             .subscribe(result => {
                 this.ngOnInit();
             });
+    }
+
+    eligibleToRegister(course: Course): boolean {
+        return (
+            this.sessionHandler.userRole == 'student'
+            &&
+            course.students!.indexOf(this.sessionHandler.userId) < 0
+            &&
+            +course.student_count! < 20
+        );
     }
 
     applyFilter(filterValue: String) {

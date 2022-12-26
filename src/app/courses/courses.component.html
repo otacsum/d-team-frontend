@@ -1,22 +1,25 @@
-<mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($any($event.target).value)"
-        placeholder="Search for a course ID, Description, Instructor, etc..." #input>
-</mat-form-field>
+<div [hidden]="!(showCourses == 'all')">
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($any($event.target).value)"
+            placeholder="Search for a course ID, Description, Instructor, etc..." #input>
+    </mat-form-field>
 
-<mat-form-field>
-    <mat-select placeholder="Another way to filter" (selectionChange)="applyFilter($any($event).value)">
-        <mat-option value="HIST">
-            History
-        </mat-option>
-        <mat-option value="CSE">
-            Computer Science & Computer Engineering
-        </mat-option>
-        <mat-option value="PHYS">
-            Physics
-        </mat-option>
-    </mat-select>
-</mat-form-field>
+    <mat-form-field>
+        <mat-select placeholder="Another way to filter" (selectionChange)="applyFilter($any($event).value)">
+            <mat-option value="HIST">
+                History
+            </mat-option>
+            <mat-option value="CSE">
+                Computer Science & Computer Engineering
+            </mat-option>
+            <mat-option value="PHYS">
+                Physics
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
 
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
 
@@ -44,16 +47,24 @@
                 <mat-icon fontIcon="edit"></mat-icon>
             </button>
 
-            <button *ngIf="(sessionHandler.userRole == 'student' && +course.student_count < 20 && course.students.indexOf(sessionHandler.userId) < 0)" mat-icon-button
-                aria-label="join course"
-                (click)="joinCourse(course.id, course.subject_abbreviation + course.code); $event.stopPropagation()">
-                <mat-icon fontIcon="add_shopping_cart"></mat-icon>
-            </button>
 
-            <button *ngIf="(sessionHandler.userRole == 'student' && +course.student_count >= 20)" mat-icon-button
-                aria-label="course is full">
+            <ng-container *ngIf="showCourses == 'all'">
+                <button *ngIf="(eligibleToRegister(course))" mat-icon-button aria-label="join course"
+                    (click)="joinCourse(course.id, course.subject_abbreviation + course.code); $event.stopPropagation()">
+                    <mat-icon fontIcon="input"></mat-icon>
+                </button>
+            </ng-container>
+
+            <button *ngIf="(+course.student_count >= 20)" mat-icon-button aria-label="course is full">
                 <mat-icon fontIcon="lock"></mat-icon>
             </button>
+
+            <ng-container *ngIf="showCourses == 'all'">
+                <button *ngIf="(course.students!.indexOf(this.sessionHandler.userId) >= 0)" mat-icon-button
+                    aria-label="you are registered">
+                    <mat-icon fontIcon="school"></mat-icon>
+                </button>
+            </ng-container>
 
             <button *ngIf="(sessionHandler.userId == course.person_id || sessionHandler.userRole == 'administrator')"
                 mat-icon-button aria-label="delete course"
@@ -61,7 +72,7 @@
                 <mat-icon fontIcon="delete"></mat-icon>
             </button>
         </td>
-    </ng-container> -->
+    </ng-container>
 
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
@@ -81,7 +92,8 @@
                     <div class="detail-content">{{course.description}}</div>
 
                     <div class="detail-header">Instructor:</div>
-                    <div class="detail-content">{{course.instructor.first_name}} {{course.instructor.last_name}}</div>
+                    <div class="detail-content">{{course.instructor.first_name}} {{course.instructor.last_name}}
+                    </div>
                     <div class="detail-content"><a [href]="course.instructor.email">{{course.instructor.email}}</a>
                     </div>
 

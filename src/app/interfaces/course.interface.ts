@@ -9,6 +9,7 @@ export interface Course {
     start_date: string;
     end_date: string;
     instructor?: {};
+    students?: string[];
     is_active: boolean;
     createdAt: string;
     updatedAt: string;
