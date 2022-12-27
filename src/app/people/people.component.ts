@@ -1,7 +1,6 @@
-import {Component, Inject} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Component} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 
 import {Person} from '../interfaces/person.interface';
 import {PersonService} from './person.service';
@@ -29,11 +28,11 @@ export class PeopleComponent {
 
     constructor(
         private personService: PersonService,
-        public dialog: MatDialog, 
+        public dialog: MatDialog,
         public sessionHandler: SessionHandler,
         public dataSource: MatTableDataSource<Person>,
     ) {}
-    
+
     people: Person[] = [];
     columnsToDisplay = ['first_name', 'last_name', 'type'];
     columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
@@ -47,7 +46,7 @@ export class PeopleComponent {
         this.personService.findAll()
             .subscribe(people => {
                 this.people = people;
-                this.dataSource = new MatTableDataSource(people);                
+                this.dataSource = new MatTableDataSource(people);
             });
     }
 

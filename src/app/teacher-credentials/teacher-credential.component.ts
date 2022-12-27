@@ -1,10 +1,8 @@
-import {Component, Inject, Input} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Component, Input} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 
 import {TeacherCredential} from '../interfaces/teacher-credential.interface';
-import {Person} from '../interfaces/person.interface';
 import {TeacherCredentialService} from './teacher-credential.service';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {MatTableDataSource} from '@angular/material/table';
@@ -35,8 +33,7 @@ export class TeacherCredentialComponent {
         public dataSource: MatTableDataSource<TeacherCredential>,
     ) {}
 
-    @Input()
-    teacherId = 'b594b596-e9f1-4b90-a82d-37ac1c05443a';
+    @Input() teacherId = '';
 
     credentials: TeacherCredential[] = [];
     displayedColumns: string[] = ['job_title', 'rank', 'credential_type', 'subject_abbreviation', 'actions'];

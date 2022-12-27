@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 
 import {Environment} from 'src/environment/environment';
 import {Person} from '../interfaces/person.interface';
-//import {People} from '../interfaces/people.mock';
 import {Success} from '../interfaces/success.interface';
-import { MessageHandler } from '../lib/message-handler';
+import {MessageHandler} from '../lib/message-handler';
 
 @Injectable({
     providedIn: 'root'
@@ -42,7 +41,7 @@ export class PersonService {
             );
     }
 
-    findAllTeachers(): Observable<Person[]>  {
+    findAllTeachers(): Observable<Person[]> {
         return this.http.get<Person[]>(this.personUrl + '/type/teacher')
             .pipe(
                 tap(_ => this.messageHandler.log('PersonService: fetched people')),
@@ -73,14 +72,14 @@ export class PersonService {
 
     removePerson(id: string): Observable<Success> {
         return this.http.delete<Person>(this.personUrl + `/${id}`)
-        .pipe(
-            tap((successPayload: Success) => {
-                this.messageHandler
-                    .log(`PersonService: Remove ID (${id}) sent`);
-                this.messageHandler
-                    .log(`PersonService: Successfully deactivated person ${id}`);
-            }),
-            catchError(this.messageHandler.handleError<Success>('PersonService: error'))
-        );
+            .pipe(
+                tap((successPayload: Success) => {
+                    this.messageHandler
+                        .log(`PersonService: Remove ID (${id}) sent`);
+                    this.messageHandler
+                        .log(`PersonService: Successfully deactivated person ${id}`);
+                }),
+                catchError(this.messageHandler.handleError<Success>('PersonService: error'))
+            );
     }
 }

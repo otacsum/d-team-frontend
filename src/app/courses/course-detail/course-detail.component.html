@@ -92,3 +92,8 @@
         </mat-card>
     </form>
 </div>
+
+<div *ngIf="(sessionHandler.loggedIn && !isCreateCourse)">
+    <h2>Assignments</h2>
+    <app-assignment></app-assignment>
+</div>

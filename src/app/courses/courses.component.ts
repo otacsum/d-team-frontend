@@ -1,6 +1,6 @@
-import {Component, Input, Inject} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 
 import {Course} from '../interfaces/course.interface';
 import {CourseService} from './course.service';
@@ -23,8 +23,8 @@ import {SessionHandler} from '../lib/session-handler';
 
 export class CoursesComponent {
 
-    @Input()
-    showCourses: string = 'all';
+    @Input() showCourses: string = 'all';
+    @Input() teacherId: string = '';
 
     constructor(
         private courseService: CourseService,
@@ -50,7 +50,7 @@ export class CoursesComponent {
                     this.dataSource = new MatTableDataSource(course);
                 });
         } else if (this.showCourses == 'teacher') {
-            this.courseService.findAllByTeacher(this.sessionHandler.userId)
+            this.courseService.findAllByTeacher(this.teacherId)
                 .subscribe(course => {
                     this.course = course;
                     this.dataSource = new MatTableDataSource(course);

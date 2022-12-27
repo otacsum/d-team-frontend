@@ -15,7 +15,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-//import {MatMomentDateModule} from '@angular/material/moment';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -33,6 +32,8 @@ import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component'
 import {StudentCoursesComponent} from './student-courses/student-courses.component';
 import {TeacherCredentialComponent} from './teacher-credentials/teacher-credential.component';
 import {TeacherCredentialDetailComponent} from './teacher-credentials/teacher-credential-detail/teacher-credential-detail.component';
+import {AssignmentComponent} from './assignments/assignment.component';
+import {AssignmentDetailComponent} from './assignments/assignment-detail/assignment-detail.component';
 
 @NgModule({
     declarations: [
@@ -48,6 +49,8 @@ import {TeacherCredentialDetailComponent} from './teacher-credentials/teacher-cr
         StudentCoursesComponent,
         TeacherCredentialComponent,
         TeacherCredentialDetailComponent,
+        AssignmentComponent,
+        AssignmentDetailComponent,
     ],
     imports: [
         BrowserModule,
@@ -66,7 +69,6 @@ import {TeacherCredentialDetailComponent} from './teacher-credentials/teacher-cr
         MatDialogModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        //MatMomentDateModule,
     ],
     providers: [
         MatTableDataSource,

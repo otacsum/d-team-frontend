@@ -1,17 +1,16 @@
 import {Component, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {TeacherCredential} from 'src/app/interfaces/teacher-credential.interface';
-import {Person} from '../../interfaces/person.interface';
 import {TeacherCredentialService} from '../teacher-credential.service';
 import {MessageHandler} from '../../lib/message-handler';
 import {SessionHandler} from '../../lib/session-handler';
 
 @Component({
-    selector: 'teacher-credential-detail',
+    selector: 'app-teacher-credential-detail',
     templateUrl: './teacher-credential-detail.component.html',
     styleUrls: ['./teacher-credential-detail.component.css']
 })
@@ -28,7 +27,9 @@ export class TeacherCredentialDetailComponent {
     ) {}
 
 
-    isNewCredential = (this.router.url == '/teacher/credential/create');
+    isNewCredential = (this.router.url.indexOf('/credential/create') >= 0);
+    id = String(this.route.snapshot.paramMap.get('id'));
+    teacherId = String(this.route.snapshot.paramMap.get('teacherId'));
 
     credentialForm = this.fb.group({
         jobTitle: [null, Validators.required],
@@ -78,13 +79,13 @@ export class TeacherCredentialDetailComponent {
     submit(): void {
         const id = String(this.route.snapshot.paramMap.get('id'));
         if (this.isNewCredential) {
-            this.credential.person_id = this.sessionHandler.userId;
+            this.credential.person_id = this.teacherId;
             this.teacherCredentialService.create(this.credential)
                 .subscribe(result => {
                     if (result.success) {
                         this.messageHandler
                             .log(`Create Credential: Success, redirecting to all credentials.`);
-                        this.router.navigate(['/teacher/credential']);
+                        this.router.navigate([`/person/${this.teacherId}`]);
                     } else {
                         this.messageHandler
                             .log(`Create Credential: Error: ${result.message}`);
@@ -96,7 +97,7 @@ export class TeacherCredentialDetailComponent {
                     if (result.success) {
                         this.messageHandler
                             .log(`Update Credential: Successful Update, redirecting to all credentials.`);
-                        this.router.navigate(['/teacher/credential']);
+                        this.router.navigate([`/person/${this.teacherId}`]);
                     } else {
                         this.messageHandler
                             .log(`Update Credential: Error: ${result.message}`);

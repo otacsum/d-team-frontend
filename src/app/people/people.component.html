@@ -38,7 +38,7 @@
                 <mat-icon *ngIf="expandedPerson === person">keyboard_arrow_up</mat-icon>
             </button>
 
-            <button *ngIf="(sessionHandler.userId == person.id || sessionHandler.userRole == 'administrator')" mat-icon-button routerLink="/person/detail/{{person.id}}" aria-label="edit person">
+            <button *ngIf="(sessionHandler.userId == person.id || sessionHandler.userRole == 'administrator')" mat-icon-button routerLink="/person/{{person.id}}" aria-label="edit person">
                 <mat-icon fontIcon="edit"></mat-icon>
             </button>
 
@@ -54,6 +54,7 @@
         <td mat-cell *matCellDef="let person" [attr.colspan]="columnsToDisplayWithExpand.length">
             <div class="person-detail" [@detailExpand]="person == expandedPerson ? 'expanded' : 'collapsed'">
                 <div class="person-properties">
+                    <div class="detail-header">E-mail:</div>
                     <div class="person-email"><a href="mailto:{{person.email}}">{{person.email}}</a></div>
 
                     <div class="detail-header">ID:</div>

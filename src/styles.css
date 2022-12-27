@@ -10,6 +10,10 @@ body {
     padding: 10px;
 }
 
+h2 {
+    margin: 20px, 0px, 5px, 0px;
+}
+
 button.formButton {
     margin-right: 1rem;
     margin-bottom: 1rem;

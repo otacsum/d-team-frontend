@@ -23,19 +23,6 @@ tr.person-row:not(.example-expanded-row):active {
     display: flex;
 }
 
-.person-properties {
-    min-width: 80px;
-    border: 2px solid black;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-}
-
-.person-email {
-    font-weight: bold;
-    line-height: normal;
-}
-
 .detail-header {
     font-weight: bold;
     margin-top: 10px;

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 
 import {Environment} from 'src/environment/environment';
 import {Course} from '../interfaces/course.interface';
 import {Success} from '../interfaces/success.interface';
-import { MessageHandler } from '../lib/message-handler';
+import {MessageHandler} from '../lib/message-handler';
 
 @Injectable({
     providedIn: 'root'
@@ -73,27 +73,27 @@ export class CourseService {
 
     remove(id: string): Observable<Success> {
         return this.http.delete<Course>(this.courseUrl + `/${id}`)
-        .pipe(
-            tap((successPayload: Success) => {
-                this.messageHandler
-                    .log(`${this.serviceLoggingName}: Remove ID (${id}) sent`);
-                this.messageHandler
-                    .log(`${this.serviceLoggingName}: Successfully deactivated ${id}`);
-            }),
-            catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: error`))
-        );
+            .pipe(
+                tap((successPayload: Success) => {
+                    this.messageHandler
+                        .log(`${this.serviceLoggingName}: Remove ID (${id}) sent`);
+                    this.messageHandler
+                        .log(`${this.serviceLoggingName}: Successfully deactivated ${id}`);
+                }),
+                catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: error`))
+            );
     }
 
     joinCourse(id: string, studentId: string): Observable<Success> {
         return this.http.post<Course>(this.courseUrl + `/${id}/students/${studentId}`, null)
-        .pipe(
-            tap((successPayload: Success) => {
-                this.messageHandler
-                    .log(`${this.serviceLoggingName}: Student ${studentId} register for course (${id}) sent`);
-                this.messageHandler
-                    .log(`${this.serviceLoggingName}: Successfully registered to course ${id}`);
-            }),
-            catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: error`))
-        );
+            .pipe(
+                tap((successPayload: Success) => {
+                    this.messageHandler
+                        .log(`${this.serviceLoggingName}: Student ${studentId} register for course (${id}) sent`);
+                    this.messageHandler
+                        .log(`${this.serviceLoggingName}: Successfully registered to course ${id}`);
+                }),
+                catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: error`))
+            );
     }
 }

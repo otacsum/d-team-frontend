@@ -1,14 +1,15 @@
 import {Component, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {Course} from '../../interfaces/course.interface';
 import {CourseService} from '../course.service';
 import {Person} from '../../interfaces/person.interface';
-import { PersonService } from 'src/app/people/person.service';
+import {PersonService} from 'src/app/people/person.service';
 import {MessageHandler} from '../../lib/message-handler';
+import {SessionHandler} from '../../lib/session-handler';
 
 @Component({
     selector: 'app-courses-detail',
@@ -25,6 +26,7 @@ export class CourseDetailComponent {
         private fb: FormBuilder,
         private messageHandler: MessageHandler,
         private router: Router,
+        public sessionHandler: SessionHandler,
     ) {}
 
 
@@ -45,7 +47,7 @@ export class CourseDetailComponent {
         endDate: [null, Validators.required],
         teacher: [null, Validators.required],
     });
-    
+
     teachers: Person[] = [];
 
     subjects = [
@@ -65,7 +67,7 @@ export class CourseDetailComponent {
         }
 
         this.getTeachers();
-        
+
         this.messageHandler
             .log(`Router.URL: ${this.router.url}`);
     }
@@ -81,7 +83,7 @@ export class CourseDetailComponent {
     getTeachers(): void {
         this.personService.findAllTeachers()
             .subscribe(teachers => {
-                this.teachers = teachers;               
+                this.teachers = teachers;
             });
     }
 

@@ -1,18 +1,18 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog} from "@angular/material/dialog";
 
-import {Course} from '../interfaces/course.interface';
-import {StudentCourseService} from './student-course.service';
+import { Assignment } from '../interfaces/assignment.interface';
+import {AssignmentService} from './assignment.service';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {MatTableDataSource} from '@angular/material/table';
 import {SessionHandler} from '../lib/session-handler';
-import {StudentCourse} from '../interfaces/student-course.interface';
 
 @Component({
-    selector: 'app-student-courses',
-    templateUrl: './student-courses.component.html',
-    styleUrls: ['./student-courses.component.css'],
+    selector: 'app-assignment',
+    templateUrl: './assignment.component.html',
+    styleUrls: ['./assignment.component.css'],
     animations: [
         trigger('detailExpand', [
             state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -22,36 +22,35 @@ import {StudentCourse} from '../interfaces/student-course.interface';
     ],
 })
 
-export class StudentCoursesComponent {
-
-    @Input() studentId: string = '';
+export class AssignmentComponent {
 
     constructor(
-        private studentCourseService: StudentCourseService,
+        private assignmentService: AssignmentService,
+        private route: ActivatedRoute,
         public dialog: MatDialog,
         public sessionHandler: SessionHandler,
-        public dataSource: MatTableDataSource<StudentCourse>,
+        public dataSource: MatTableDataSource<Assignment>,
     ) {}
 
-    studentCourse: StudentCourse[] = [];
-    columnsToDisplay = ['subject_abbreviation', 'code', 'title'];
-    columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-    expandedCourse = {} as Course;
+    courseId = String(this.route.snapshot.paramMap.get('id'));
+
+    assignments: Assignment[] = [];
+    displayedColumns: string[] = ['type', 'title', 'points_possible', 'due_date', 'actions'];
 
     ngOnInit(): void {
-        this.getCourses();
+        this.getCredentials();
     }
 
-    getCourses(): void {
-        this.studentCourseService.findAllByUser(this.studentId)
-            .subscribe(studentCourse => {
-                this.studentCourse = studentCourse;
-                this.dataSource = new MatTableDataSource(studentCourse);
+    getCredentials(): void {
+        this.assignmentService.findAll(this.courseId)
+            .subscribe(assignments => {
+                this.assignments = assignments;
+                this.dataSource = new MatTableDataSource(assignments);
             });
     }
 
-    dropCourse(id: string): void {
-        this.studentCourseService.dropCourse(id)
+    remove(id: string): void {
+        this.assignmentService.remove(id)
             .subscribe(result => {
                 this.ngOnInit();
             });
@@ -73,7 +72,7 @@ export class StudentCoursesComponent {
 
         dialogRef.afterClosed().subscribe(confirmed => {
             if (confirmed) {
-                //this.removeCourse(id);
+                this.remove(id);
             }
         });
     }

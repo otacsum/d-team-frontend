@@ -43,7 +43,7 @@
             </button>
 
             <button *ngIf="(sessionHandler.userId == course.person_id || sessionHandler.userRole == 'administrator')"
-                mat-icon-button routerLink="/course/detail/{{course.id}}" aria-label="edit course">
+                mat-icon-button routerLink="/course/{{course.id}}" aria-label="edit course">
                 <mat-icon fontIcon="edit"></mat-icon>
             </button>
 
@@ -79,7 +79,6 @@
         <td mat-cell *matCellDef="let course" [attr.colspan]="columnsToDisplayWithExpand.length">
             <div class="course-detail" [@detailExpand]="course == expandedCourse ? 'expanded' : 'collapsed'">
                 <div class="course-properties">
-
                     <div class="detail-header">{{course.subject_abbreviation}}{{course.code}}</div>
                     <div class="detail-content">{{course.title}}</div>
 
@@ -94,7 +93,7 @@
                     <div class="detail-header">Instructor:</div>
                     <div class="detail-content">{{course.instructor.first_name}} {{course.instructor.last_name}}
                     </div>
-                    <div class="detail-content"><a [href]="course.instructor.email">{{course.instructor.email}}</a>
+                    <div class="detail-content"><a href="mailto:{{course.instructor.email}}">{{course.instructor.email}}</a>
                     </div>
 
                     <div class="detail-header">Other:</div>
@@ -108,7 +107,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-    <tr mat-row *matRowDef="let course; columns: columnsToDisplayWithExpand;" class="person-row"
+    <tr mat-row *matRowDef="let course; columns: columnsToDisplayWithExpand;" class="course-row"
         [class.expanded-row]="expandedCourse === course"
         (click)="expandedCourse = expandedCourse === course ? null : course">
     </tr>

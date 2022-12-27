@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {Person} from '../../interfaces/person.interface';
@@ -22,13 +22,13 @@ export class PersonDetailComponent {
         private location: Location,
         private fb: FormBuilder,
         private messageHandler: MessageHandler,
-        public sessionHandler: SessionHandler,
         private router: Router,
+        public sessionHandler: SessionHandler,
     ) {}
 
-
+    person = {} as Person;
+    id = String(this.route.snapshot.paramMap.get('id'));
     isNewUser = (this.router.url == '/person/create');
-
     hidePassword = true;
 
     personForm = this.fb.group({
@@ -115,11 +115,8 @@ export class PersonDetailComponent {
             .log(`Router.URL: ${this.router.url}`);
     }
 
-    @Input() person = {} as Person;
-
     getPerson(): void {
-        const id = String(this.route.snapshot.paramMap.get('id'));
-        this.peopleService.findOne(id)
+        this.peopleService.findOne(this.id)
             .subscribe(person => this.person = person);
     }
 
@@ -128,7 +125,6 @@ export class PersonDetailComponent {
     }
 
     submit(): void {
-        const id = String(this.route.snapshot.paramMap.get('id'));
         if (this.isNewUser) {
             this.peopleService.create(this.person)
                 .subscribe(result => {
@@ -142,7 +138,7 @@ export class PersonDetailComponent {
                     }
                 });
         } else {
-            this.peopleService.update(id, this.person)
+            this.peopleService.update(this.id, this.person)
                 .subscribe(result => {
                     if (result.success) {
                         this.messageHandler

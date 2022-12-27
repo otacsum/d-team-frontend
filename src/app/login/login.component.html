@@ -15,13 +15,13 @@
             <mat-form-field appearance="fill">
                 <mat-label>Enter your password</mat-label>
                 <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="login.password" name="password">
-                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                <button mat-icon-button type="button" matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hidePassword">
                     <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
 
         </div>
-        <button mat-raised-button class="formButton" type="button" color="primary" (click)="submit()">LOGIN</button>
+        <button mat-raised-button class="formButton" type="submit" color="primary" (click)="submit()">LOGIN</button>
     </form>
 </div>

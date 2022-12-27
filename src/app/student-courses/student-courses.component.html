@@ -15,7 +15,7 @@
         <th mat-header-cell *matHeaderCellDef aria-label="row actions">
         </th>
         <td mat-cell *matCellDef="let studentCourse">
-            <ng-container *ngIf="showCourses == 'all'">
+            <ng-container>
                 <button mat-icon-button aria-label="expand row"
                     (click)="(expandedCourse = expandedCourse === studentCourse ? null : studentCourse); $event.stopPropagation()">
                     <mat-icon *ngIf="expandedCourse !== studentCourse">keyboard_arrow_down</mat-icon>
