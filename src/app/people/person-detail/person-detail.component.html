@@ -1,160 +1,164 @@
-<div>
-    <form [formGroup]="personForm" novalidate>
-        <mat-card>
-            <mat-card-content>
-                <div class="row">
-                    <div class="col">
-                        <mat-form-field class="full-width">
-                            <mat-label>First Name</mat-label>
-                            <input matInput formControlName="firstName" [(ngModel)]="person.first_name">
-                            <mat-error *ngIf="personForm.controls['firstName'].hasError('required')">
-                                First name is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field class="full-width">
-                            <mat-label>Last Name</mat-label>
-                            <input matInput formControlName="lastName" [(ngModel)]="person.last_name">
-                            <mat-error *ngIf="personForm.controls['lastName'].hasError('required')">
-                                Last name is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row" *ngIf="isNewUser">
-                    <div class="col">
-                        <mat-form-field class="full-width">
-                            <mat-label>Enter Password</mat-label>
-                            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
-                                [(ngModel)]="person.pass_hash">
-                            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
-                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
-                                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                            </button>
-                            <mat-error *ngIf="personForm.controls['password'].hasError('required')">
-                                Password is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field class="full-width">
-                            <mat-label>Confirm Password</mat-label>
-                            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
-                            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
-                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
-                                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                            </button>
-                            <mat-error *ngIf="personForm.controls['password'].hasError('required')">
-                                Password is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row" *ngIf="isNewUser || (person.email.indexOf('@test.test') < 0);else test_user">
-                    <div class="col"><mat-form-field class="full-width">
-                            <mat-label>E-mail Address</mat-label>
-                            <input matInput placeholder="name@example.com" formControlName="email"
-                                [(ngModel)]="person.email">
-                            <mat-error *ngIf="personForm.controls['email'].hasError('required')">
-                                E-mail address is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <ng-template #test_user>
+<div *ngIf="sessionHandler.loggedIn || isNewUser">
+    <div>
+        <form [formGroup]=" personForm" novalidate>
+            <mat-card>
+                <mat-card-content>
                     <div class="row">
                         <div class="col">
                             <mat-form-field class="full-width">
-                                <mat-label>E-mail Address</mat-label>
-                                <input matInput placeholder="name@example.com" formControlName="email"
-                                    [(ngModel)]="person.email" [readonly]="true">
-                                <mat-hint>
-                                    Test user e-mail addresses are read-only
-                                </mat-hint>
+                                <mat-label>First Name</mat-label>
+                                <input matInput formControlName="firstName" [(ngModel)]="person.first_name">
+                                <mat-error *ngIf="personForm.controls['firstName'].hasError('required')">
+                                    First name is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput formControlName="lastName" [(ngModel)]="person.last_name">
+                                <mat-error *ngIf="personForm.controls['lastName'].hasError('required')">
+                                    Last name is <strong>required</strong>
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
-                </ng-template>
-                <div class="row">
-                    <div class="col">
-                        <mat-form-field class="full-width">
-                            <mat-label>Address</mat-label>
-                            <input matInput formControlName="address" [(ngModel)]="person.street_address">
-                            <mat-error *ngIf="personForm.controls['address'].hasError('required')">
-                                Address is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
+                    <div class="row" *ngIf="isNewUser">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Enter Password</mat-label>
+                                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                                    [(ngModel)]="person.pass_hash">
+                                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-error *ngIf="personForm.controls['password'].hasError('required')">
+                                    Password is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Confirm Password</mat-label>
+                                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+                                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-error *ngIf="personForm.controls['password'].hasError('required')">
+                                    Password is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <mat-form-field class="full-width">
-                            <mat-label>City</mat-label>
-                            <input matInput formControlName="city" [(ngModel)]="person.city">
-                            <mat-error *ngIf="personForm.controls['city'].hasError('required')">
-                                City is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
+                    <div class="row" *ngIf="isNewUser || (person.email.indexOf('@test.test') < 0);else test_user">
+                        <div class="col"><mat-form-field class="full-width">
+                                <mat-label>E-mail Address</mat-label>
+                                <input matInput placeholder="name@example.com" formControlName="email"
+                                    [(ngModel)]="person.email">
+                                <mat-error *ngIf="personForm.controls['email'].hasError('required')">
+                                    E-mail address is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="col">
-                        <mat-form-field class="full-width">
-                            <mat-label>State</mat-label>
-                            <mat-select formControlName="state" [(value)]="person.state_abbreviation"
-                                [ngModel]="person.state_abbreviation">
-                                <mat-option *ngFor="let state of states" [value]="state.abbreviation">
-                                    {{ state.name }}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="personForm.controls['state'].hasError('required')">
-                                State is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
+                    <ng-template #test_user>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>E-mail Address</mat-label>
+                                    <input matInput placeholder="name@example.com" formControlName="email"
+                                        [(ngModel)]="person.email" [readonly]="true">
+                                    <mat-hint>
+                                        Test user e-mail addresses are read-only
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Address</mat-label>
+                                <input matInput formControlName="address" [(ngModel)]="person.street_address">
+                                <mat-error *ngIf="personForm.controls['address'].hasError('required')">
+                                    Address is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <mat-form-field class="full-width">
-                            <mat-label>Postal Code</mat-label>
-                            <input matInput #postalCode maxlength="5" type="number" formControlName="postalCode"
-                                [(ngModel)]="person.zip_code">
-                            <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-                        </mat-form-field>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>City</mat-label>
+                                <input matInput formControlName="city" [(ngModel)]="person.city">
+                                <mat-error *ngIf="personForm.controls['city'].hasError('required')">
+                                    City is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>State</mat-label>
+                                <mat-select formControlName="state" [(value)]="person.state_abbreviation"
+                                    [ngModel]="person.state_abbreviation">
+                                    <mat-option *ngFor="let state of states" [value]="state.abbreviation">
+                                        {{ state.name }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="personForm.controls['state'].hasError('required')">
+                                    State is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <mat-radio-group formControlName="role"
-                            [(ngModel)]="person.type">
-                            <mat-radio-button value="student">Student</mat-radio-button>
-                            <mat-radio-button *ngIf="(sessionHandler.userRole == 'administrator')" value="teacher">Teacher</mat-radio-button>
-                            <mat-radio-button *ngIf="(sessionHandler.userRole == 'administrator')" value="administrator">Administrator</mat-radio-button>
-                        </mat-radio-group>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Postal Code</mat-label>
+                                <input matInput #postalCode maxlength="5" type="number" formControlName="postalCode"
+                                    [(ngModel)]="person.zip_code">
+                                <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button class="formButton" color="primary" type="button"
-                    (click)="goBack()">Cancel</button>
-                <button mat-raised-button class="formButton" color="primary" type="button"
-                    (click)="submit()">Submit</button>
-            </mat-card-actions>
-        </mat-card>
-    </form>
-</div>
-
-<div *ngIf="!isNewUser">
-    <div
-        *ngIf="sessionHandler.loggedIn && (sessionHandler.userRole == 'teacher' || sessionHandler.userRole == 'administrator')">
-        <h2>Active Courses</h2>
-        <app-courses [showCourses]="'teacher'" [teacherId]="person.id!"></app-courses>
-
-        <h2>Credentials</h2>
-        <app-teacher-credential [teacherId]="person.id!"></app-teacher-credential>
+                    <div class="row">
+                        <div class="col">
+                            <mat-radio-group formControlName="role" [(ngModel)]="person.type">
+                                <mat-radio-button value="student">Student</mat-radio-button>
+                                <mat-radio-button *ngIf="(sessionHandler.userRole == 'administrator')"
+                                    value="teacher">Teacher</mat-radio-button>
+                                <mat-radio-button *ngIf="(sessionHandler.userRole == 'administrator')"
+                                    value="administrator">Administrator</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button class="formButton" color="primary" type="button"
+                        (click)="goBack()">Cancel</button>
+                    <button mat-raised-button class="formButton" color="primary" type="button"
+                        (click)="submit()">Submit</button>
+                </mat-card-actions>
+            </mat-card>
+        </form>
     </div>
 
-    <div *ngIf="sessionHandler.loggedIn && (sessionHandler.userRole == 'student')">
-        <h2>Active Courses</h2>
-        <app-student-courses [studentId]="person.id!"></app-student-courses>
+    <div *ngIf="!isNewUser">
+        <div
+            *ngIf="person.type == 'teacher'">
+            <h2>Active Courses</h2>
+            <app-courses [showCourses]="'teacher'" [teacherId]="person.id!"></app-courses>
+
+            <h2>Credentials</h2>
+            <app-teacher-credential [teacherId]="person.id!"></app-teacher-credential>
+        </div>
+
+        <div *ngIf="person.type == 'student'">
+            <h2>Active Courses</h2>
+            <app-student-courses [studentId]="person.id!"></app-student-courses>
+        </div>
     </div>
+
 </div>

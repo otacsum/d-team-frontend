@@ -34,8 +34,31 @@ export class StudentCoursesComponent {
     ) {}
 
     studentCourse: StudentCourse[] = [];
-    columnsToDisplay = ['subject_abbreviation', 'code', 'title'];
-    columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
+
+    columnsToDisplay = [
+        {
+            key: 'subject_abbreviation',
+            header: 'Subject',
+        },
+        {
+            key: 'code',
+            header: 'Level',
+        },
+        {
+            key: 'title',
+            header: 'Title',
+        },
+        {
+            key: 'start_date',
+            header: 'Starts',
+        },
+        {
+            key: 'end_date',
+            header: 'Ends',
+        },
+    ];
+
+    columnsToDisplayWithExpand = [...this.columnsToDisplay.map(column => column.key), 'expand'];
     expandedCourse = {} as Course;
 
     ngOnInit(): void {

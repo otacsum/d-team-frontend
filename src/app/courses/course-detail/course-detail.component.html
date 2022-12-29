@@ -95,5 +95,5 @@
 
 <div *ngIf="(sessionHandler.loggedIn && !isCreateCourse)">
     <h2>Assignments</h2>
-    <app-assignment></app-assignment>
+    <app-assignment [courseTeacherId]="course.person_id!"></app-assignment>
 </div>

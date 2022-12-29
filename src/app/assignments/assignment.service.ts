@@ -42,6 +42,14 @@ export class AssignmentService {
             );
     }
 
+    findAllForStudent(courseId: string, studentId: string): Observable<Assignment[]> {
+        return this.http.get<Assignment[]>(this.assignmentUrl + `/course/${courseId}/student/${studentId}`)
+            .pipe(
+                tap(_ => this.messageHandler.log(`${this.serviceLoggingName}: fetched assignments for course`)),
+                catchError(this.messageHandler.handleError<Assignment[]>(`${this.serviceLoggingName}: findAll`, []))
+            );
+    }
+
     findOne(id: string): Observable<Assignment> {
         return this.http.get<Assignment>(this.assignmentUrl + `/${id}`)
             .pipe(

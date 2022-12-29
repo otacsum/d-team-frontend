@@ -8,9 +8,6 @@ import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component
 import {MatTableDataSource} from '@angular/material/table';
 import {SessionHandler} from '../lib/session-handler';
 
-
-
-
 @Component({
     selector: 'app-people',
     templateUrl: './people.component.html',
@@ -34,8 +31,22 @@ export class PeopleComponent {
     ) {}
 
     people: Person[] = [];
-    columnsToDisplay = ['first_name', 'last_name', 'type'];
-    columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
+    columnsToDisplay = [
+        {
+            key: 'first_name',
+            header: 'First',
+        },
+        {
+            key: 'last_name',
+            header: 'Last',
+        },
+        {
+            key: 'type',
+            header: 'Role',
+        }
+    ];
+
+    columnsToDisplayWithExpand = [...this.columnsToDisplay.map(column => column.key), 'expand'];
     expandedPerson = {} as Person;
 
     ngOnInit(): void {

@@ -6,34 +6,21 @@ tr.detail-row {
     height: 0;
 }
 
-tr.person-row:not(.example-expanded-row):hover {
+tr.assignment-row:not(.example-expanded-row):hover {
     background: whitesmoke;
 }
 
-tr.person-row:not(.example-expanded-row):active {
+tr.assignment-row:not(.example-expanded-row):active {
     background: #efefef;
 }
 
-.person-row td {
+.assignment-row td {
     border-bottom-width: 0;
 }
 
-.person-detail {
+.assignment-detail {
     overflow: hidden;
     display: flex;
-}
-
-.person-properties {
-    min-width: 80px;
-    border: 2px solid black;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-}
-
-.person-email {
-    font-weight: bold;
-    line-height: normal;
 }
 
 .detail-header {

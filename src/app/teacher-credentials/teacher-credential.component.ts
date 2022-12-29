@@ -36,7 +36,27 @@ export class TeacherCredentialComponent {
     @Input() teacherId = '';
 
     credentials: TeacherCredential[] = [];
-    displayedColumns: string[] = ['job_title', 'rank', 'credential_type', 'subject_abbreviation', 'actions'];
+    columnsToDisplay = [
+        {
+            key: 'job_title',
+            header: 'Name',
+        },
+        {
+            key: 'rank',
+            header: 'Type',
+        },
+        {
+            key: 'credential_type',
+            header: 'Category',
+        },
+        {
+            key: 'subject_abbreviation',
+            header: 'Subject Field',
+        }
+    ];
+
+    columnsToDisplayWithExpand = [...this.columnsToDisplay.map(column => column.key), 'expand'];
+    expandedCredential = {} as TeacherCredential;
 
     ngOnInit(): void {
         this.getCredentials();
