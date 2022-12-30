@@ -30,8 +30,11 @@ export class CourseDetailComponent {
     ) {}
 
 
-    isCreateCourse = (this.router.url == '/course/create');
-    private serviceLoggingName = 'CourseService: Details:';
+    isCreateCourse: boolean = (this.router.url == '/course/create');
+    private serviceLoggingName: string = 'CourseService: Details:';
+    isReadOnly: boolean = true;
+    instructorName: string = '';
+    courseName: string = '';
 
     courseForm = this.fb.group({
         subjectAbbreviation: [null, Validators.required],
@@ -62,7 +65,9 @@ export class CourseDetailComponent {
     ];
 
     ngOnInit(): void {
-        if (!this.isCreateCourse) {
+        if (this.isCreateCourse) {
+            this.isReadOnly = false;  //Editable for new courses
+        } else {
             this.getCourse();
         }
 
@@ -77,7 +82,24 @@ export class CourseDetailComponent {
     getCourse(): void {
         const id = String(this.route.snapshot.paramMap.get('id'));
         this.courseService.findOne(id)
-            .subscribe(course => this.course = course);
+            .subscribe(course => {
+                this.course = course;
+                this.instructorName = this.course.instructor!.first_name + ' ' + this.course.instructor!.last_name;
+
+                const courseNameIndex = this.subjects.findIndex(subject => subject.abbreviation === this.course.subject_abbreviation);
+
+                this.courseName = this.subjects[courseNameIndex].name;
+
+                // Make the form editable for the assigned teacher and admins.
+                if (this.sessionHandler.loggedIn &&
+                    (
+                        this.sessionHandler.userId == this.course.person_id ||
+                        this.sessionHandler.userRole == 'administrator'
+                    )
+                ) {
+                    this.isReadOnly = false;
+                }
+            });
     }
 
     getTeachers(): void {

@@ -1,0 +1,80 @@
+<div *ngIf="sessionHandler.loggedIn">
+    <form [formGroup]="assignmentForm" novalidate>
+        <mat-card>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Title</mat-label>
+                            <input matInput formControlName="title" [(ngModel)]="assignment.title">
+                            <mat-error *ngIf="assignmentForm.controls['title'].hasError('required')">
+                                Title/Description is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Points Possible</mat-label>
+                            <input matInput formControlName="points_possible"
+                                [(ngModel)]="assignment.points_possible">
+                            <mat-error *ngIf="assignmentForm.controls['points_possible'].hasError('required')">
+                                Type or Abbreviation is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Type</mat-label>
+                            <mat-select formControlName="type" [(value)]="assignment.type"
+                                [ngModel]="assignment.type">
+                                <mat-option *ngFor="let type of types" [value]="type">
+                                    {{ type | uppercase }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="assignmentForm.controls['type'].hasError('required')">
+                                Category is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Due Date</mat-label>
+                            <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="due_date"
+                            [(ngModel)]="assignment.due_date">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="assignmentForm.controls['due_date'].hasError('required')">
+                                Due date is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description"
+                                [(ngModel)]="assignment.description"></textarea>
+                            <mat-error *ngIf="assignmentForm.controls['description'].hasError('required')">
+                                Assignment description is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button class="formButton" color="primary" type="button"
+                    (click)="goBack()">Cancel</button>
+                <button mat-raised-button class="formButton" color="primary" type="button"
+                    (click)="submit()">Submit</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>

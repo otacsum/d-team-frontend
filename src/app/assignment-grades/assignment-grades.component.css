@@ -1,0 +1,39 @@
+table {
+    width: 100%;
+}
+
+tr.detail-row {
+    height: 0;
+}
+
+tr.assignment-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.assignment-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.assignment-row td {
+    border-bottom-width: 0;
+}
+
+.assignment-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.detail-header {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+td button, th button {
+    margin-left: 25px;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+    margin-top: 10px;
+}

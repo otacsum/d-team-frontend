@@ -11,6 +11,7 @@ import {StudentCoursesComponent} from './student-courses/student-courses.compone
 import {TeacherCredentialComponent} from './teacher-credentials/teacher-credential.component';
 import {TeacherCredentialDetailComponent} from './teacher-credentials/teacher-credential-detail/teacher-credential-detail.component';
 import {AssignmentDetailComponent} from './assignments/assignment-detail/assignment-detail.component';
+import {AssignmentGradeComponent} from './assignment-grades/assignment-grades.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
@@ -28,6 +29,7 @@ const routes: Routes = [
     {path: 'teacher/:teacherId/credential/create', component: TeacherCredentialDetailComponent},
     {path: 'course/:courseId/assignment/:id', component: AssignmentDetailComponent},
     {path: 'course/:courseId/assignment/create', component: AssignmentDetailComponent},
+    {path: 'course/:courseId/gradebook', component: AssignmentGradeComponent},
 ];
 
 @NgModule({

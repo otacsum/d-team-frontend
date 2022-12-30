@@ -34,6 +34,7 @@ import {TeacherCredentialComponent} from './teacher-credentials/teacher-credenti
 import {TeacherCredentialDetailComponent} from './teacher-credentials/teacher-credential-detail/teacher-credential-detail.component';
 import {AssignmentComponent} from './assignments/assignment.component';
 import {AssignmentDetailComponent} from './assignments/assignment-detail/assignment-detail.component';
+import {AssignmentGradeComponent} from './assignment-grades/assignment-grades.component';
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import {AssignmentDetailComponent} from './assignments/assignment-detail/assignm
         TeacherCredentialDetailComponent,
         AssignmentComponent,
         AssignmentDetailComponent,
+        AssignmentGradeComponent,
     ],
     imports: [
         BrowserModule,

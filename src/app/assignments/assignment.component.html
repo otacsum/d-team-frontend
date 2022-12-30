@@ -14,6 +14,12 @@
                     mat-icon-button aria-label="add assignment" routerLink="/course/{{courseId}}/assignment/create">
                     <mat-icon fontIcon="library_add"></mat-icon>
                 </button>
+
+                <button
+                    *ngIf="(sessionHandler.userId == courseTeacherId || sessionHandler.userRole == 'administrator')"
+                    mat-icon-button routerLink="/course/{{courseId}}/gradebook" aria-label="gradebook">
+                    <mat-icon fontIcon="verified"></mat-icon>
+                </button>
             </th>
             <td mat-cell *matCellDef="let assignment">
                 <button mat-icon-button aria-label="expand row"
@@ -23,21 +29,14 @@
                 </button>
     
                 <button
-                    *ngIf="(sessionHandler.userId == assignment['course.person_id'] || sessionHandler.userRole == 'administrator')"
+                    *ngIf="(sessionHandler.userId == courseTeacherId || sessionHandler.userRole == 'administrator')"
                     mat-icon-button routerLink="/course/{{courseId}}/assignment/{{assignment.id}}"
                     aria-label="edit assignment">
                     <mat-icon fontIcon="edit"></mat-icon>
                 </button>
 
                 <button
-                    *ngIf="(sessionHandler.userId == assignment['course.person_id'] || sessionHandler.userRole == 'administrator')"
-                    mat-icon-button routerLink="/course/{{courseId}}/assignment/{{assignment.id}}"
-                    aria-label="grade assignment">
-                    <mat-icon fontIcon="verified"></mat-icon>
-                </button>
-
-                <button
-                    *ngIf="(sessionHandler.userId == assignment['course.person_id'] || sessionHandler.userRole == 'administrator')"
+                    *ngIf="(sessionHandler.userId == courseTeacherId || sessionHandler.userRole == 'administrator')"
                     mat-icon-button aria-label="delete assigment"
                     (click)='openDialog(assignment.id, "Are you sure?", "Remove " + assignment.type + " " + assignment.title + "?", "Delete"); $event.stopPropagation()'>
                     <mat-icon fontIcon="delete"></mat-icon>

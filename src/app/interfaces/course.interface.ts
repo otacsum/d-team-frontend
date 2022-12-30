@@ -1,3 +1,5 @@
+import {Person} from "./person.interface";
+
 export interface Course {
     id?: string;
     person_id?: string;
@@ -8,7 +10,7 @@ export interface Course {
     description: string;
     start_date: string;
     end_date: string;
-    instructor?: {};
+    instructor?: Person;
     students?: string[];
     is_active: boolean;
     createdAt: string;
