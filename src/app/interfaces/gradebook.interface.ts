@@ -12,6 +12,7 @@ export interface Gradebook {
             title: string;
             points_possible: number;
             grades: [{
+                id: string;
                 person_id: string;
                 points_earned: number;
             }]

@@ -28,8 +28,12 @@ tr.assignment-row:not(.example-expanded-row):active {
     margin-top: 10px;
 }
 
-td button, th button {
-    margin-left: 25px;
+.mat-mdc-icon-button.save-grade {
+    color: green;
+}
+
+button:disabled .mat-mdc-icon-button.save-grade {
+    color: gray;
 }
 
 .mat-mdc-form-field {

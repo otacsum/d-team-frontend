@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {FormBuilder, Validators} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
 
 import {Grade} from '../interfaces/grade.interface';
@@ -17,11 +17,12 @@ interface StudentRowsVariableKeys {
         first_name: string;
         last_name: string;
     };
-    [key: string]: any; // assignment_id: points_earned
+    [key: string]: any;  // assignment_id: {grade_id: id, points_earned: savedValue, points_entered: newValue}
+
 }
 
 interface ColumnsForVariableRows {
-    key: string; // Assignment ID
+    key: string; // assignment_id
     headerText: string;
     pointsPossible?: number;
     dueDate?: string;
@@ -39,11 +40,21 @@ export class AssignmentGradeComponent {
     constructor(
         private assignmentGradesService: AssignmentGradesService,
         private assignmentService: AssignmentService,
+        private fb: FormBuilder,
         private route: ActivatedRoute,
         public dialog: MatDialog,
         public sessionHandler: SessionHandler,
         public dataSource: MatTableDataSource<any>,
     ) {}
+
+    gradebookForm = this.fb.group({
+        pointsEarned: [null, Validators.compose(
+            [
+                Validators.required,
+                Validators.min(0),
+            ]
+        )]
+    });
 
     //@Input() courseTeacherId: string = '';
     courseId = String(this.route.snapshot.paramMap.get('courseId'));
@@ -58,7 +69,7 @@ export class AssignmentGradeComponent {
         },
     ];
 
-    columnDefsToDisplay: string[] = [];    
+    columnDefsToDisplay: string[] = [];
 
     ngOnInit(): void {
         this.getAssignments();
@@ -74,9 +85,23 @@ export class AssignmentGradeComponent {
                         student: studentRecord.student,
                     };
                     studentRecord.course.assignments.forEach(assignment => {
+                        // Populate empty points first, in case this
+                        // assignment for this student hasn't been graded yet
+                        studentRow[assignment.id] = {
+                            grade_id: '',
+                            points_earned: '',
+                            points_entered: '',
+                        };
+                        // Look for grades for this student, and add them if present
+                        // Mitigates sequelize structure limitation (contains grades for many students)
                         assignment.grades.forEach(grade => {
+                            // The grade is for the current student, replace blank values.
                             if (grade.person_id == studentRecord.person_id) {
-                                studentRow[assignment.id] = grade.points_earned;
+                                studentRow[assignment.id] = {
+                                    grade_id: grade.id,
+                                    points_earned: grade.points_earned,
+                                    points_entered: grade.points_earned,
+                                };
                             }
                         })
                     });
@@ -106,27 +131,63 @@ export class AssignmentGradeComponent {
             });
     }
 
-    remove(id: string): void {
-        this.assignmentGradesService.remove(id)
-            .subscribe(result => {
-                this.ngOnInit();
-            });
-    }
+    submitGrade(
+        personId: string,
+        assignmentId: string,
+        rowIndex: any,
+        studentRow: StudentRowsVariableKeys
+    ) {
+        const gradeId = studentRow[assignmentId].grade_id;
+        const pointsEntered = studentRow[assignmentId].points_entered;
 
-    openDialog(id: string, title: string, prompt: string, buttonText: string): void {
-        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-            data: {
-                title: title,
-                prompt: prompt,
-                buttonText: buttonText,
-            },
-            width: '250px',
-        });
-
-        dialogRef.afterClosed().subscribe(confirmed => {
-            if (confirmed) {
-                this.remove(id);
+        // Create a grade
+        if (gradeId === '' && pointsEntered >= 0) {
+            const grade: Grade = {
+                person_id: personId,
+                assignment_id: assignmentId,
+                points_earned: pointsEntered,
             }
-        });
+
+            this.assignmentGradesService.create(grade)
+                .subscribe(result => {
+                    // Update the local dataset to ensure UI logic reflects update.
+                    this.studentRows[rowIndex][assignmentId].points_earned = pointsEntered;
+                    this.studentRows[rowIndex][assignmentId].grade_id = result.id;
+                });
+        }
+        // Delete a grade  (must come first due to 'truthiness' of update condition)
+        else if (pointsEntered == null) {
+            const deleteDialog = this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                    title: 'Delete Grade?',
+                    prompt: 'Are you sure you want to delete this grade?  Did you mean to enter zero ( 0 ) points?',
+                    buttonText: 'Delete',
+                },
+                width: '250px',
+            });
+
+            deleteDialog.afterClosed().subscribe(confirmed => {
+                if (confirmed) {
+                    this.assignmentGradesService.remove(gradeId)
+                        .subscribe(result => {
+                            // Update the local dataset to ensure UI logic reflects update.
+                            this.studentRows[rowIndex][assignmentId].points_earned = null;
+                            this.studentRows[rowIndex][assignmentId].grade_id = '';
+                        });
+                }
+            });
+        }
+        // Update a grade
+        else if (pointsEntered >= 0) {
+            const grade: Grade = {
+                points_earned: pointsEntered,
+            }
+
+            this.assignmentGradesService.update(gradeId, grade)
+                .subscribe(result => {
+                    // Update the local dataset to ensure UI logic reflects update.
+                    this.studentRows[rowIndex][assignmentId].points_earned = pointsEntered;
+                });
+        }
     }
 }

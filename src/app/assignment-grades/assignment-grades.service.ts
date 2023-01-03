@@ -44,28 +44,12 @@ export class AssignmentGradesService {
             );
     }
 
-    /* findAllForStudent(courseId: string, studentId: string): Observable<Assignment[]> {
-        return this.http.get<Assignment[]>(this.gradeUrl + `/course/${courseId}/student/${studentId}`)
-            .pipe(
-                tap(_ => this.messageHandler.log(`${this.serviceLoggingName}: fetched assignments for course`)),
-                catchError(this.messageHandler.handleError<Assignment[]>(`${this.serviceLoggingName}: findAll`, []))
-            );
-    }
-
-    findOne(id: string): Observable<Assignment> {
-        return this.http.get<Assignment>(this.gradeUrl + `/${id}`)
-            .pipe(
-                tap(_ => this.messageHandler.log(`${this.serviceLoggingName}: fetched ${id}`)),
-                catchError(this.messageHandler.handleError<Assignment>(`${this.serviceLoggingName}: findOne`))
-            );
-    }*/
-
     update(id: string, grade: Grade): Observable<Success> {
         return this.http.patch<Success>(this.gradeUrl + `/${id}`, grade)
             .pipe(
                 tap((successPayload: Success) => {
                     this.messageHandler
-                        .log(`${this.serviceLoggingName}: ID (${grade.id}) updated properties sent`);
+                        .log(`${this.serviceLoggingName}: ID (${id}) updated properties sent`);
                     this.messageHandler
                         .log(`${this.serviceLoggingName}: Updated Successfully? ${successPayload.success}`);
                 }),

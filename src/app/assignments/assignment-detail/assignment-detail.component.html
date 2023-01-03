@@ -8,7 +8,7 @@
                             <mat-label>Title</mat-label>
                             <input matInput formControlName="title" [(ngModel)]="assignment.title">
                             <mat-error *ngIf="assignmentForm.controls['title'].hasError('required')">
-                                Title/Description is <strong>required</strong>
+                                Title is <strong>required</strong>
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -20,7 +20,7 @@
                             <input matInput formControlName="points_possible"
                                 [(ngModel)]="assignment.points_possible">
                             <mat-error *ngIf="assignmentForm.controls['points_possible'].hasError('required')">
-                                Type or Abbreviation is <strong>required</strong>
+                                Points Possible is <strong>required</strong>
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -35,7 +35,7 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="assignmentForm.controls['type'].hasError('required')">
-                                Category is <strong>required</strong>
+                                Type is <strong>required</strong>
                             </mat-error>
                         </mat-form-field>
                     </div>
