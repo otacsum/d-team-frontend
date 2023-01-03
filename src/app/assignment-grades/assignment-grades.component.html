@@ -13,9 +13,9 @@
                 {{studentRow[column.key].last_name}}</ng-container>
             <ng-container *ngIf="column.key != 'student'">
 
-                Saved: {{studentRow[column.key].points_earned}}
+                <!-- Saved: {{studentRow[column.key].points_earned}}
                 <br>
-                Entered: {{studentRow[column.key].points_entered}}
+                Entered: {{studentRow[column.key].points_entered}} -->
 
                 <form novalidate>
                     <mat-form-field>
@@ -45,5 +45,5 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnDefsToDisplay"></tr>
-    <tr mat-row *matRowDef="let studentRow; columns: columnDefsToDisplay;"></tr>
+    <tr mat-row *matRowDef="let studentRow of studentRows; columns: columnDefsToDisplay;"></tr>
 </table>
