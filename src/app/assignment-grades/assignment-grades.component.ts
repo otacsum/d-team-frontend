@@ -9,6 +9,7 @@ import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component
 import {MatTableDataSource, MatTableDataSourcePaginator} from '@angular/material/table';
 import {SessionHandler} from '../lib/session-handler';
 import {AssignmentService} from '../assignments/assignment.service';
+import {GradeHandler} from '../lib/grade-handler';
 
 
 interface StudentRowsVariableKeys {
@@ -17,7 +18,15 @@ interface StudentRowsVariableKeys {
         first_name: string;
         last_name: string;
     };
-    [key: string]: any;  // assignment_id: {grade_id: id, points_earned: savedValue, points_entered: newValue}
+    totalPointsPossible: number;
+    totalPointsEarned: number;
+    letter_grade: string;
+    [key: string]: any;     /* assignment_id: {
+                                    grade_id: id, 
+                                    points_possible: fromAssignmentObject, 
+                                    points_earned: savedValueFromDB, 
+                                    points_entered: newValueEntered
+                            } */
 
 }
 
@@ -45,6 +54,7 @@ export class AssignmentGradeComponent {
         public dialog: MatDialog,
         public sessionHandler: SessionHandler,
         public dataSource: MatTableDataSource<any>,
+        private gradeHandler: GradeHandler,
     ) {}
 
     gradebookForm = this.fb.group({
@@ -69,47 +79,13 @@ export class AssignmentGradeComponent {
         },
     ];
 
-    columnDefsToDisplay: string[] = [];
+    assignmentIds: string[] = [];  // for iterating keys during grade calculations
+
+    columnDefsToDisplay: string[] = []; // Controls which columns to display in mat table.
 
     ngOnInit(): void {
         this.getAssignments();
         this.getGrades();
-    }
-
-    getGrades(): void {
-        this.assignmentGradesService.findAll(this.courseId)
-            .subscribe(gradebook => {
-                // Populate the dynamic table object with rows data.
-                gradebook.forEach(studentRecord => {
-                    let studentRow: StudentRowsVariableKeys = {
-                        student: studentRecord.student,
-                    };
-                    studentRecord.course.assignments.forEach(assignment => {
-                        // Populate empty points first, in case this
-                        // assignment for this student hasn't been graded yet
-                        studentRow[assignment.id] = {
-                            grade_id: '',
-                            points_earned: '',
-                            points_entered: '',
-                        };
-                        // Look for grades for this student, and add them if present
-                        // Mitigates sequelize structure limitation (contains grades for many students)
-                        assignment.grades.forEach(grade => {
-                            // The grade is for the current student, replace blank values.
-                            if (grade.person_id == studentRecord.person_id) {
-                                studentRow[assignment.id] = {
-                                    grade_id: grade.id,
-                                    points_earned: grade.points_earned,
-                                    points_entered: grade.points_earned,
-                                };
-                            }
-                        })
-                    });
-                    this.studentRows.push(studentRow);
-                });
-
-                this.dataSource = new MatTableDataSource(this.studentRows);
-            });
     }
 
     getAssignments(): void {
@@ -117,6 +93,9 @@ export class AssignmentGradeComponent {
             .subscribe(assignments => {
                 // Populate the dynamic headers object with assignment details.
                 assignments.forEach(assignment => {
+
+                    this.assignmentIds.push(assignment.id!);
+
                     const column: ColumnsForVariableRows = {
                         key: assignment.id!,
                         headerText: assignment.title,
@@ -127,7 +106,65 @@ export class AssignmentGradeComponent {
                     this.columnsToDisplay.push(column);
                 });
 
+                this.columnsToDisplay.push({
+                    key: 'letter_grade',
+                    headerText: 'Grade',
+                });
+
                 this.columnDefsToDisplay = [...this.columnsToDisplay.map(column => column.key)];
+            });
+    }
+
+    getGrades(): void {
+        this.assignmentGradesService.findAll(this.courseId)
+            .subscribe(gradebook => {
+                // Populate the dynamic table object with rows data.
+                gradebook.forEach(studentRecord => {
+                    let studentRow: StudentRowsVariableKeys = {
+                        student: studentRecord.student,
+                        totalPointsPossible: 0,
+                        totalPointsEarned: 0,
+                        letter_grade: '',
+                    };
+
+                    studentRecord.course.assignments.forEach(assignment => {
+                        // Populate empty points first, in case this
+                        // assignment for this student hasn't been graded yet
+                        studentRow[assignment.id] = {
+                            grade_id: '',
+                            points_possible: assignment.points_possible,
+                            points_earned: null,
+                            points_entered: null,
+                        };
+                        // Look for grades for this student, and add them if present
+                        // Mitigates sequelize structure limitation (contains grades for many students)
+                        assignment.grades.forEach(grade => {
+                            // The grade is for the current student, replace blank values.
+                            if (grade.person_id == studentRecord.person_id) {
+
+                                // If the student has eligible points, sum into the possible and earned.
+                                //studentRow.totalPointsEarned += grade.points_earned;
+                                //studentRow.totalPointsPossible += assignment.points_possible;
+
+                                // Add the points for this assignment so they can be shown in the form.
+                                studentRow[assignment.id] = {
+                                    grade_id: grade.id,
+                                    points_possible: assignment.points_possible,
+                                    points_earned: grade.points_earned,
+                                    points_entered: grade.points_earned,
+                                };
+                            }
+                        })
+                    });
+
+                    //studentRow.letter_grade = this.gradeHandler
+                    //.getLetterGrade(studentRow.totalPointsPossible, studentRow.totalPointsEarned);
+
+                    this.studentRows.push(studentRow);
+                });
+
+                this.calculatePointsAndLetterGrades();
+                this.dataSource = new MatTableDataSource(this.studentRows);
             });
     }
 
@@ -153,10 +190,11 @@ export class AssignmentGradeComponent {
                     // Update the local dataset to ensure UI logic reflects update.
                     this.studentRows[rowIndex][assignmentId].points_earned = pointsEntered;
                     this.studentRows[rowIndex][assignmentId].grade_id = result.id;
+                    this.calculatePointsAndLetterGrades();
                 });
         }
         // Delete a grade  (must come first due to 'truthiness' of update condition)
-        else if (pointsEntered == null) {
+        else if (pointsEntered === null) {
             const deleteDialog = this.dialog.open(ConfirmDialogComponent, {
                 data: {
                     title: 'Delete Grade?',
@@ -173,6 +211,7 @@ export class AssignmentGradeComponent {
                             // Update the local dataset to ensure UI logic reflects update.
                             this.studentRows[rowIndex][assignmentId].points_earned = null;
                             this.studentRows[rowIndex][assignmentId].grade_id = '';
+                            this.calculatePointsAndLetterGrades();
                         });
                 }
             });
@@ -187,7 +226,32 @@ export class AssignmentGradeComponent {
                 .subscribe(result => {
                     // Update the local dataset to ensure UI logic reflects update.
                     this.studentRows[rowIndex][assignmentId].points_earned = pointsEntered;
+                    this.calculatePointsAndLetterGrades();
                 });
         }
+    }
+
+    calculatePointsAndLetterGrades(): void {
+        this.studentRows.forEach(studentRow => {
+            let totalPointsPossible = 0;
+            let totalPointsEarned = 0;
+
+            this.assignmentIds.forEach(assignmentId => {
+                // If points have been earned, calculate eligible & earned into total.
+                if (!(studentRow[assignmentId].points_earned === null)) {
+                    totalPointsPossible += studentRow[assignmentId].points_possible;
+                    totalPointsEarned += studentRow[assignmentId].points_earned;
+                }
+            });
+
+            // Assign to row object for error checking.
+            studentRow.totalPointsPossible = totalPointsPossible;
+            studentRow.totalPointsEarned = totalPointsEarned;
+
+            // Calculate the letter grade and display it.
+            studentRow.letter_grade = this.gradeHandler
+                .getLetterGrade(studentRow.totalPointsPossible, studentRow.totalPointsEarned);
+
+        });
     }
 }

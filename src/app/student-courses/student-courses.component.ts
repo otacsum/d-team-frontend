@@ -8,6 +8,7 @@ import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component
 import {MatTableDataSource} from '@angular/material/table';
 import {SessionHandler} from '../lib/session-handler';
 import {StudentCourse} from '../interfaces/student-course.interface';
+import {GradeHandler} from '../lib/grade-handler';
 
 @Component({
     selector: 'app-student-courses',
@@ -31,9 +32,10 @@ export class StudentCoursesComponent {
         public dialog: MatDialog,
         public sessionHandler: SessionHandler,
         public dataSource: MatTableDataSource<StudentCourse>,
+        private gradeHandler: GradeHandler,
     ) {}
 
-    studentCourse: StudentCourse[] = [];
+    studentCourses: StudentCourse[] = [];
 
     columnsToDisplay = [
         {
@@ -71,9 +73,12 @@ export class StudentCoursesComponent {
 
     getCourses(): void {
         this.studentCourseService.findAllByUser(this.studentId)
-            .subscribe(studentCourse => {
-                this.studentCourse = studentCourse;
-                this.dataSource = new MatTableDataSource(this.studentCourse);
+            .subscribe(studentCourses => {
+                this.studentCourses = studentCourses;
+                this.calculateCourseGrades();
+                this.dataSource = new MatTableDataSource(this.studentCourses);
+
+        console.log((this.dataSource));
             });
     }
 
@@ -97,7 +102,25 @@ export class StudentCoursesComponent {
         });
     }
 
-    
+    calculateCourseGrades(): void {
+        this.studentCourses.forEach(course => {
+            let totalPointsPossible = 0;
+            let totalPointsEarned = 0;
+
+            // Sum up the points possible and earned for each assignment
+            if (course.course.assignments) {
+                course.course.assignments.forEach(assignment => {
+                    if (assignment.grades && assignment.grades.length > 0) {
+                        totalPointsPossible += assignment.points_possible;
+                        totalPointsEarned += assignment.grades[0].points_earned;
+                    }
+                });
+            }
+
+            // Get the overall letter grade for the course
+            course.course.letter_grade = this.gradeHandler.getLetterGrade(totalPointsPossible, totalPointsEarned);
+        });
+    }
 
     applyFilter(filterValue: String) {
         this.dataSource.filter = filterValue.trim().toLowerCase();

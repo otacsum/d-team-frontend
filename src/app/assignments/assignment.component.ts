@@ -31,7 +31,7 @@ export class AssignmentComponent {
         public dialog: MatDialog,
         public sessionHandler: SessionHandler,
         public dataSource: MatTableDataSource<Assignment>,
-        public gradeHandler: GradeHandler,
+        private gradeHandler: GradeHandler,
     ) {}
 
     @Input() courseTeacherId: string = '';

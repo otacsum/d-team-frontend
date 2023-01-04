@@ -8,5 +8,4 @@ export interface StudentCourse {
     is_active: boolean;
     createdAt: string;
     updatedAt: string;
-    
 }
