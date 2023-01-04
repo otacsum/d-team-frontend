@@ -30,14 +30,14 @@ export class StudentCourseService {
             );
     }
 
-    dropCourse(id: string): Observable<Success> {
-        return this.http.delete<Course>(this.courseUrl + `/${id}`)
+    dropCourse(courseId: string, studentId: string): Observable<Success> {
+        return this.http.delete<Course>(this.courseUrl + `/${courseId}/students/${studentId}`)
             .pipe(
                 tap((successPayload: Success) => {
                     this.messageHandler
-                        .log(`${this.serviceLoggingName}: Remove ID (${id}) sent`);
+                        .log(`${this.serviceLoggingName}: Remove ID (${courseId}) sent`);
                     this.messageHandler
-                        .log(`${this.serviceLoggingName}: Successfully deactivated ${id}`);
+                        .log(`${this.serviceLoggingName}: Successfully deactivated ${courseId}`);
                 }),
                 catchError(this.messageHandler.handleError<Success>(`ERROR in ${this.serviceLoggingName}: error`))
             );

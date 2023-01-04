@@ -31,7 +31,7 @@
 
                 <button
                     mat-icon-button aria-label="drop course"
-                    (click)='openDialog(studentCourse.id, "Are you sure?", "Drop " + studentCourse.course.subject_abbreviation + " " + studentCourse.course.code + "?", "Drop this Course"); $event.stopPropagation()'>
+                    (click)='dropCourse(studentCourse); $event.stopPropagation()'>
                     <mat-icon fontIcon="delete"></mat-icon>
                 </button>
             </ng-container>

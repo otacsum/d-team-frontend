@@ -56,6 +56,10 @@ export class StudentCoursesComponent {
             key: 'end_date',
             header: 'Ends',
         },
+        {
+            key: 'letter_grade',
+            header: 'Grade',
+        },
     ];
 
     columnsToDisplayWithExpand = [...this.columnsToDisplay.map(column => column.key), 'expand'];
@@ -69,35 +73,33 @@ export class StudentCoursesComponent {
         this.studentCourseService.findAllByUser(this.studentId)
             .subscribe(studentCourse => {
                 this.studentCourse = studentCourse;
-                this.dataSource = new MatTableDataSource(studentCourse);
+                this.dataSource = new MatTableDataSource(this.studentCourse);
             });
     }
 
-    dropCourse(id: string): void {
-        this.studentCourseService.dropCourse(id)
-            .subscribe(result => {
-                this.ngOnInit();
-            });
-    }
-
-    applyFilter(filterValue: String) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
-    openDialog(id: string, title: string, prompt: string, buttonText: string): void {
-        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    dropCourse(studentCourse: StudentCourse): void {
+        const dropCourseDialog = this.dialog.open(ConfirmDialogComponent, {
             data: {
-                title: title,
-                prompt: prompt,
-                buttonText: buttonText,
+                title: 'Are you sure?',
+                prompt: `Drop ${studentCourse.course.subject_abbreviation} ${studentCourse.course.code}?`,
+                buttonText: 'Drop this Course',
             },
             width: '250px',
         });
 
-        dialogRef.afterClosed().subscribe(confirmed => {
+        dropCourseDialog.afterClosed().subscribe(confirmed => {
             if (confirmed) {
-                //this.removeCourse(id);
+                this.studentCourseService.dropCourse(studentCourse.course_id, studentCourse.person_id)
+                    .subscribe(result => {
+                        this.ngOnInit();
+                    });
             }
         });
+    }
+
+    
+
+    applyFilter(filterValue: String) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 }
