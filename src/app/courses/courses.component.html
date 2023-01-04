@@ -61,10 +61,15 @@
                 <mat-icon fontIcon="lock"></mat-icon>
             </button>
 
-            <ng-container *ngIf="showCourses == 'all'">
-                <button *ngIf="(course.students!.indexOf(this.sessionHandler.userId) >= 0)" mat-icon-button
+            <ng-container *ngIf="(showCourses == 'all' && course.students!.indexOf(this.sessionHandler.userId) >= 0)">
+                <button mat-icon-button
                     aria-label="you are registered">
                     <mat-icon fontIcon="school"></mat-icon>
+                </button>
+
+                <button
+                    mat-icon-button routerLink="/course/{{course.id}}" aria-label="View course">
+                    <mat-icon fontIcon="login"></mat-icon>
                 </button>
             </ng-container>
 
