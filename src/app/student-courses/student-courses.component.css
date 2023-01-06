@@ -51,6 +51,10 @@ td button {
     margin-top: 10px;
 }
 
+div.gpa {
+    font-size: larger;
+    font-weight: bold;
+}
 
 td button, th button {
     margin-left: 25px;

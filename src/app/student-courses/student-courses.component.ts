@@ -26,6 +26,8 @@ import {GradeHandler} from '../lib/grade-handler';
 export class StudentCoursesComponent {
 
     @Input() studentId: string = '';
+    allLetterGrades: string[] = [];
+    GPA: number|string = '';
 
     constructor(
         private studentCourseService: StudentCourseService,
@@ -77,8 +79,6 @@ export class StudentCoursesComponent {
                 this.studentCourses = studentCourses;
                 this.calculateCourseGrades();
                 this.dataSource = new MatTableDataSource(this.studentCourses);
-
-        console.log((this.dataSource));
             });
     }
 
@@ -119,7 +119,10 @@ export class StudentCoursesComponent {
 
             // Get the overall letter grade for the course
             course.course.letter_grade = this.gradeHandler.getLetterGrade(totalPointsPossible, totalPointsEarned);
+            this.allLetterGrades.push(course.course.letter_grade);
         });
+
+        this.GPA = this.gradeHandler.getGPA(this.allLetterGrades);
     }
 
     applyFilter(filterValue: String) {
