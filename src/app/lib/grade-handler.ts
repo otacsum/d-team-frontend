@@ -54,7 +54,7 @@ export class GradeHandler {
 
     getGPA(letterGrades: string[]): number | string {
         let totalGradePoints: number = 0;
-        let countOfGrades: number = letterGrades.length;
+        let countOfGrades: number = 0;
         let GPA: number | string = 'N/A'
 
         letterGrades.forEach(grade => {
@@ -63,27 +63,31 @@ export class GradeHandler {
                 case 'A':
                 case 'A+':
                     totalGradePoints += 4;
+                    countOfGrades++;
                     break;
                 case 'B-':
                 case 'B':
                 case 'B+':
                     totalGradePoints += 3;
+                    countOfGrades++;
                     break;
                 case 'C-':
                 case 'C':
                 case 'C+':
                     totalGradePoints += 2;
+                    countOfGrades++;
                     break;
                 case 'D-':
                 case 'D':
                 case 'D+':
                     totalGradePoints += 1;
+                    countOfGrades++;
                     break;
             }
         });
 
         if (countOfGrades > 0) {
-            GPA = totalGradePoints / countOfGrades;
+            GPA = (totalGradePoints / countOfGrades).toFixed(2);
         }
 
         return GPA;
