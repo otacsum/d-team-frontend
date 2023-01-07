@@ -1,27 +1,57 @@
 /* AppComponent's private CSS styles */
-h1 {
+h1,
+h2 {
+    text-align: center;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #0a566e;
     margin-bottom: 0;
 }
 
+h1 {
+    font-size: 2.5em;
+    margin: 25px auto 5px auto;
+}
+
+div.site-header {
+    margin: 0px;
+    height: 90px;
+    border-bottom: 2px solid #0a566e;
+}
+
+div.login-logout-button a {
+    padding: 0.3rem;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bolder;
+    position: absolute;
+    top: 80px;
+    right: 10px;
+    width: 75px;
+    color: #ffffff;
+    background-color: #0a566e;
+}
+
 nav {
-    margin: 0px, 5px;
+    position: absolute;
+    width: 150px;
+    height: 10000px;
+    background-color: #0a566e;
 }
 
 nav a {
-    padding: 1rem;
+    padding: 0.3rem;
     text-decoration: none;
-    margin: 10px, 5px;
-    display: inline-block;
-    background-color: #e8e8e8;
-    color: #3d3d3d;
-    border-radius: 4px;
+    display: block;
+    color: #ffffff;
 }
 
-nav a:hover {
-    color: white;
-    background-color: #42545C;
+nav a:active, nav a:hover{
+    background-color:#f5feff;
+    color: #0a566e;
 }
 
-nav a:active {
-    background-color: black;
+.content {
+    margin: 10px 10px 10px 160px;
 }

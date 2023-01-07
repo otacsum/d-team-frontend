@@ -11,5 +11,7 @@ export class AppComponent {
     constructor(
         public sessionHandler: SessionHandler,
     ) {}
-    title = 'L.A. Unified School District';
+
+    title = 'Los Angeles Unified School District';
+    subtitle = 'Education Management System';
 }

@@ -1,9 +1,31 @@
-<mat-card class="classroom-card" *ngFor="let course of courses" routerLink="/course/detail/{{course.id}}">
-    <mat-card-header>
-            <mat-card-title>{{course.subject_abbreviation}} {{course.code}}</mat-card-title>
-            <mat-card-subtitle>{{course.title}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <p>{{course.description}}</p>
-    </mat-card-content>
-</mat-card>
+<h2>Welcome, {{user.first_name}}</h2>
+
+<div *ngIf="userRole == 'student'">
+    <h2>My Courses</h2>
+    <div class="classroom-card-container">
+        <mat-card class="classroom-card" *ngFor="let course of courses" routerLink="/course/{{course.id}}">
+            <mat-card-header>
+                <mat-card-title>{{course.title}}</mat-card-title>
+                <mat-card-subtitle>{{course.subject_abbreviation}} {{course.code}}
+                    <span>Ends: {{course.end_date | date: 'shortDate'}}</span> </mat-card-subtitle>
+                <mat-card-subtitle>Instructor: {{course.instructor!.first_name}}
+                    {{course.instructor!.last_name}} <a href="mailto: {{course.instructor!.email}}" title="E-mail Instructor" (click)="$event.stopPropagation()"><mat-icon fontIcon="mail"></mat-icon></a></mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{course.description}}</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<div *ngIf="userRole == 'teacher'">
+    <h2>My Courses</h2>
+    <app-courses [showCourses]="'teacher'" [teacherId]="userId"></app-courses>
+</div>
+
+<div *ngIf="userRole == 'administrator'" class="admin-links">
+    <h2>LAUSD Administration</h2>
+    <a routerLink="/person/create">Create User</a>
+    <a routerLink="/people">Manage Users</a>
+    <a routerLink="/courses">Manage Courses</a>
+</div>

@@ -1,4 +1,40 @@
+div.admin-links a {
+    padding: 0.3rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    color: #0a566e;
+}
+
+div.admin-links a:active,
+div.admin-links a:hover {
+    background-color: #0a566e;
+    color: #f5feff;
+}
+
+.classroom-card-container {
+    display: flex;
+    flex-direction: row;
+}
+
+mat-card {
+    border: 2px solid #0a566e;
+}
+
 .classroom-card {
     max-width: 400px;
-    margin: 8px 0px;
-  }
+    margin: 8px;
+    cursor: pointer;
+}
+
+mat-card-subtitle a mat-icon {
+    font-size: 1.2em;
+    color: #0a566e;
+    vertical-align: middle;
+    margin: 5px 0px 0px 10px;
+}
+
+mat-card-subtitle span {
+    margin-left: 25px;
+}

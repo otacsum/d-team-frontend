@@ -50,6 +50,14 @@ export class CourseService {
             );
     }
 
+    findAllByStudent(id: string): Observable<Course[]> {
+        return this.http.get<Course[]>(this.courseUrl + `/student/${id}`)
+            .pipe(
+                tap(_ => this.messageHandler.log(`${this.serviceLoggingName}: fetched courses for student ${id}`)),
+                catchError(this.messageHandler.handleError<Course[]>(`ERROR in ${this.serviceLoggingName}: findAllByStudent`, []))
+            );
+    }
+
     findOne(id: string): Observable<Course> {
         return this.http.get<Course>(this.courseUrl + `/${id}`)
             .pipe(

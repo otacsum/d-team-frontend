@@ -6,12 +6,23 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: #fffffc;
-    padding: 10px;
+    color: #0a566e;
+    background-color: #f5feff;
+    padding: 0px;
 }
 
+h1,
 h2 {
-    margin: 20px, 0px, 5px, 0px;
+    text-align: center;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #0a566e;
+    margin-bottom: 0;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 25px auto 5px auto;
 }
 
 button.formButton {

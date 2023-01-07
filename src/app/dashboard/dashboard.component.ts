@@ -1,38 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Person } from '../interfaces/person.interface';
-import { PersonService } from '../people/person.service';
+import {Person} from '../interfaces/person.interface';
+import {PersonService} from '../people/person.service';
 import {Course} from '../interfaces/course.interface';
-import {CourseService} from '../courses/course.service';
+import {SessionHandler} from '../lib/session-handler';
+import {StudentCourseService} from '../student-courses/student-course.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: [ './dashboard.component.css' ]
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css']
 })
 
 export class DashboardComponent implements OnInit {
 
-  people: Person[] = [];
-  courses: Course[] = [];
+    constructor(
+        private personService: PersonService,
+        private studentCourseService: StudentCourseService,
+        public sessionHandler: SessionHandler,
+    ) {}
 
-  constructor(
-    private peopleService: PersonService,
-    private courseService: CourseService,
-    ) { }
+    userId = this.sessionHandler.userId;
+    userRole = this.sessionHandler.userRole;
 
-  ngOnInit(): void {
-    //this.getPeople();
-    this.getCourses();
-  }
+    user = {} as Person;
+    courses: Course[] = [];
 
-  getPeople(): void {
-    this.peopleService.findAll()
-      .subscribe(people => this.people = people.slice(1, 3));
-  }
+    ngOnInit(): void {
+        this.getUser();
+        this.getCourses();
+    }
 
-  getCourses(): void {
-    this.courseService.findAll()
-      .subscribe(courses => this.courses = courses.slice(0, 4));
-  }
+    getUser(): void {
+        this.personService.findOne(this.userId)
+            .subscribe(person => this.user = person);
+    }
+
+    getCourses(): void {
+        if (this.userRole == 'student') {
+            this.studentCourseService.findAllByUser(this.userId)
+                .subscribe(studentCourses => {
+                    studentCourses.forEach(studentCourse => {
+                        this.courses.push(studentCourse.course);
+                    });
+                });
+        }
+    }
 }
