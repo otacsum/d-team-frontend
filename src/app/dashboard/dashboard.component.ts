@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
         public sessionHandler: SessionHandler,
     ) {}
 
+    isLoggedIn = this.sessionHandler.loggedIn;
     userId = this.sessionHandler.userId;
     userRole = this.sessionHandler.userRole;
 

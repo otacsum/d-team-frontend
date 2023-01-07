@@ -38,3 +38,7 @@ mat-card-subtitle a mat-icon {
 mat-card-subtitle span {
     margin-left: 25px;
 }
+
+.guest-intro div {
+    margin: 10px 50px;
+}
