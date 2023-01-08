@@ -83,6 +83,9 @@ export class GradeHandler {
                     totalGradePoints += 1;
                     countOfGrades++;
                     break;
+                case 'F':
+                    countOfGrades++;
+                    break;
             }
         });
 
