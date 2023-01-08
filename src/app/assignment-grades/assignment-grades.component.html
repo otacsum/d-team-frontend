@@ -47,7 +47,7 @@
                             <mat-icon>close</mat-icon>
                         </button> -->
 
-                        <button
+                        <button matTooltip="Save Grade"
                             [disabled]="studentRow[column.key].points_entered === studentRow[column.key].points_earned || studentRow[column.key].points_entered < 0"
                             matSuffix mat-icon-button aria-label="Save" (click)="submitGrade(studentRow.student.id, column.key, i, studentRow)">
                             <mat-icon class="mat-mdc-icon-button save-grade">verified</mat-icon>

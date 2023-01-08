@@ -17,6 +17,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 // Components
 import {AppComponent} from './app.component';
@@ -71,6 +72,7 @@ import {AssignmentGradeComponent} from './assignment-grades/assignment-grades.co
         MatDialogModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatTooltipModule,
     ],
     providers: [
         MatTableDataSource,

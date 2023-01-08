@@ -10,32 +10,32 @@
 
         <ng-container matColumnDef="expand">
             <th mat-header-cell *matHeaderCellDef aria-label="row actions">
-                <button *ngIf="(sessionHandler.userId == courseTeacherId || sessionHandler.userRole == 'administrator')"
+                <button matTooltip="Add Assignment" *ngIf="(sessionHandler.userId == courseTeacherId || sessionHandler.userRole == 'administrator')"
                     mat-icon-button aria-label="add assignment" routerLink="/course/{{courseId}}/assignment/create">
                     <mat-icon fontIcon="library_add"></mat-icon>
                 </button>
 
-                <button
+                <button matTooltip="Gradebook"
                     *ngIf="(sessionHandler.userId == courseTeacherId || sessionHandler.userRole == 'administrator')"
                     mat-icon-button routerLink="/course/{{courseId}}/gradebook" aria-label="gradebook">
                     <mat-icon fontIcon="verified"></mat-icon>
                 </button>
             </th>
             <td mat-cell *matCellDef="let assignment">
-                <button mat-icon-button aria-label="expand row"
+                <button matTooltip="Show/Hide" mat-icon-button aria-label="expand row"
                     (click)="(expandedAssignment = expandedAssignment === assignment ? null : assignment); $event.stopPropagation()">
                     <mat-icon *ngIf="expandedAssignment !== assignment">keyboard_arrow_down</mat-icon>
                     <mat-icon *ngIf="expandedAssignment === assignment">keyboard_arrow_up</mat-icon>
                 </button>
     
-                <button
+                <button matTooltip="Edit Assignment"
                     *ngIf="(sessionHandler.userId == courseTeacherId || sessionHandler.userRole == 'administrator')"
                     mat-icon-button routerLink="/course/{{courseId}}/assignment/{{assignment.id}}"
                     aria-label="edit assignment">
                     <mat-icon fontIcon="edit"></mat-icon>
                 </button>
 
-                <button
+                <button matTooltip="Delete Assignment"
                     *ngIf="(sessionHandler.userId == courseTeacherId || sessionHandler.userRole == 'administrator')"
                     mat-icon-button aria-label="delete assigment"
                     (click)='openDialog(assignment.id, "Are you sure?", "Remove " + assignment.type + " " + assignment.title + "?", "Delete"); $event.stopPropagation()'>

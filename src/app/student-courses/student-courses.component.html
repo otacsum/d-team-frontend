@@ -27,18 +27,18 @@
                 </th>
                 <td mat-cell *matCellDef="let studentCourse">
                     <ng-container>
-                        <button mat-icon-button aria-label="expand row"
+                        <button matTooltip="Show/Hide" mat-icon-button aria-label="expand row"
                             (click)="(expandedCourse = expandedCourse === studentCourse ? null : studentCourse); $event.stopPropagation()">
                             <mat-icon *ngIf="expandedCourse !== studentCourse">keyboard_arrow_down</mat-icon>
                             <mat-icon *ngIf="expandedCourse === studentCourse">keyboard_arrow_up</mat-icon>
                         </button>
 
-                        <button mat-icon-button routerLink="/course/{{studentCourse.course.id}}"
+                        <button matTooltip="Enter Classroom" mat-icon-button routerLink="/course/{{studentCourse.course.id}}"
                             aria-label="View course">
                             <mat-icon fontIcon="login"></mat-icon>
                         </button>
 
-                        <button mat-icon-button aria-label="drop course"
+                        <button matTooltip="Drop Course" mat-icon-button aria-label="drop course"
                             (click)='dropCourse(studentCourse); $event.stopPropagation()'>
                             <mat-icon fontIcon="delete"></mat-icon>
                         </button>
