@@ -1,6 +1,6 @@
 <div *ngIf="sessionHandler.loggedIn || isNewUser">
     <div>
-        <form [formGroup]=" personForm" novalidate>
+        <form [formGroup]=" personForm" novalidate class="mat-elevation-z8">
             <mat-card>
                 <mat-card-content>
                     <div class="row">
@@ -156,7 +156,6 @@
         </div>
 
         <div *ngIf="person.type == 'student'">
-            <h2>Active Courses</h2>
             <app-student-courses [studentId]="person.id!"></app-student-courses>
         </div>
     </div>

@@ -1,11 +1,14 @@
 <mat-form-field>
-    <mat-label>Filter</mat-label>
+    <mat-label>Search</mat-label>
     <input matInput (keyup)="applyFilter($any($event.target).value)"
         placeholder="Search for a name, e-mail, mailing address, etc..." #input>
 </mat-form-field>
 
 <mat-form-field>
-    <mat-select placeholder="Another way to filter" (selectionChange)="applyFilter($any($event).value)">
+    <mat-select placeholder="Filter by Role" (selectionChange)="applyFilter($any($event).value)">
+        <mat-option value="">
+            All People
+        </mat-option>
         <mat-option value="student">
             Students
         </mat-option>

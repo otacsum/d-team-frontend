@@ -30,3 +30,72 @@ button.formButton {
     margin-bottom: 1rem;
     margin-top: 1rem;
 }
+
+/* Form Buttons */
+.mat-mdc-raised-button:not(:disabled) {
+    background-color: #0a566e !important;
+}
+
+/* Input Background Color */
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: rgba(166, 243, 251, .3);
+}
+
+/* Placeholder Text */
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: rgba(10, 86, 110, 0.6);
+}
+
+/* Floating Labels on Focus */
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: #0a566e !important;
+}
+
+/* Blinking Cursor */
+.mdc-text-field .mdc-text-field__input {
+    caret-color: #0a566e !important;
+}
+
+/* Bottom Border Thin */
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+    border-bottom-color: rgba(10, 86, 110, 0.6);
+}
+
+/* Bottom Border Thick on Focus */
+.mdc-text-field--filled .mdc-line-ripple::after {
+    border-bottom-color: #0a566e !important;
+}
+
+/* Floating Error Labels on Focus */
+.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: #c60007 !important;
+}
+
+/* Bottom Error Border Thin */
+.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+    border-bottom-color: #c60007 !important;
+}
+
+/* Bottom Error Border Thick on Focus */
+.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+    border-bottom-color: #c60007 !important;
+}
+
+/* Error Context Message Text */
+.mat-mdc-form-field-error {
+    color: #c60007 !important;
+}
+
+/* Radio Button Color */
+.mat-mdc-radio-button.mat-accent {
+    --mdc-radio-selected-focus-icon-color: #0a566e;
+    --mdc-radio-selected-hover-icon-color: #0a566e;
+    --mdc-radio-selected-icon-color: #0a566e;
+    --mdc-radio-selected-pressed-icon-color: #0a566e;
+    --mat-mdc-radio-checked-ripple-color: #0a566e;
+}
+
+/* Content Cards */
+.mat-mdc-card {
+    border-radius: 0px !important;
+}

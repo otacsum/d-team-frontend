@@ -6,35 +6,24 @@ tr.detail-row {
     height: 0;
 }
 
-tr.person-row:not(.example-expanded-row):hover {
+tr.course-row:not(.example-expanded-row):hover {
     background: whitesmoke;
 }
 
-tr.person-row:not(.example-expanded-row):active {
+tr.course-row:not(.example-expanded-row):active {
     background: #efefef;
 }
 
-.person-row td {
+.course-row td {
     border-bottom-width: 0;
 }
 
-.person-detail {
+.course-detail {
     overflow: hidden;
     display: flex;
 }
 
-.person-properties {
-    min-width: 80px;
-    border: 2px solid black;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-}
 
-.person-email {
-    font-weight: bold;
-    line-height: normal;
-}
 
 .detail-header {
     font-weight: bold;
@@ -51,11 +40,32 @@ td button {
     margin-top: 10px;
 }
 
-div.gpa {
-    font-size: larger;
+.gpa {
     font-weight: bold;
+    text-align: center;
+    margin: 10px auto;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-td button, th button {
+.gpa mat-card-content mat-icon {
+   transform: scale(3);
+   margin-bottom: 40px;
+}
+
+.gpa_score {
+    font-size: 70px;
+}
+
+.gpa .subtext {
+    margin-top: 30px;
+    font-size: 1.2em;
+}
+
+td button,
+th button {
     margin-left: 25px;
 }

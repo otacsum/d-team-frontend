@@ -61,6 +61,17 @@ export class CoursesComponent {
     columnsToDisplayWithExpand = [...this.columnsToDisplay.map(column => column.key), 'expand'];
     expandedCourse = {} as Course;
 
+    subjects = [
+        {name: 'Chemistry & Bio-Chemistry', abbreviation: 'CHEM'},
+        {name: 'Computer Science & Engineering', abbreviation: 'CSE'},
+        {name: 'Economics', abbreviation: 'ECON'},
+        {name: 'History', abbreviation: 'HIST'},
+        {name: 'Literature & Language Arts', abbreviation: 'LIT'},
+        {name: 'Mathematics', abbreviation: 'MATH'},
+        {name: 'Music Theory & Performance', abbreviation: 'MUS'},
+        {name: 'Physics', abbreviation: 'PHYS'},
+    ];
+
     ngOnInit(): void {
         this.getCourses();
     }

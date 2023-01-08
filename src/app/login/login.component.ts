@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {Login} from '../interfaces/login.interface';
@@ -11,12 +11,12 @@ import {LoginService} from './login.service';
     styleUrls: ['./login.component.css']
 })
 
-
 export class LoginComponent {
 
     constructor(
         private loginService: LoginService,
         private router: Router,
+        private fb: FormBuilder,
     ) {}
 
     login = {} as Login;
@@ -25,15 +25,10 @@ export class LoginComponent {
 
     hidePassword = true;
 
-    email = new FormControl('', [Validators.required, Validators.email]);
-
-    getErrorMessage() {
-        if (this.email.hasError('required')) {
-            return 'You must enter a value';
-        }
-
-        return this.email.hasError('email') ? 'Not a valid email' : '';
-    }
+    loginForm = this.fb.group({
+        email: [null, [Validators.required, Validators.email]],
+        password: [null, Validators.required],
+    });
 
     submit(): void {
         if (this.login) {

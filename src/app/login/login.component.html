@@ -3,25 +3,37 @@
     <div class="login-error" [ngStyle]="{'display': isError ? 'block' : 'none'}">
         Invalid Username or Password
     </div>
-    <form class="login-form">
-        <div>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your email</mat-label>
-                <input matInput required placeholder="name@example.com" [formControl]="email"  [(ngModel)]="login.email" name="email">
-                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your password</mat-label>
-                <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="login.password" name="password">
-                <button mat-icon-button type="button" matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hidePassword">
-                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
+    <form [formGroup]="loginForm" novalidate class="login-form mat-elevation-z8">
+        <mat-card>
+            <mat-card-content>
+                <div>
+                    <mat-form-field appearance="fill" class="custom-form-field">
+                        <mat-label>Enter your email</mat-label>
+                        <input matInput required placeholder="name@example.com" formControlName="email"
+                            [(ngModel)]="login.email" name="email">
+                        <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+                            Email address is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Enter your password</mat-label>
+                        <input matInput required placeholder="Enter your password" formControlName="password"
+                            [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="login.password" name="password">
+                        <button mat-icon-button type="button" matSuffix (click)="hidePassword = !hidePassword"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+                            Password is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
 
-        </div>
-        <button mat-raised-button class="formButton" type="submit" color="primary" (click)="submit()">LOGIN</button>
+                </div>
+                <button mat-raised-button class="formButton" type="submit" color="primary"
+                    (click)="submit()">LOGIN</button>
+            </mat-card-content>
+        </mat-card>
     </form>
 </div>

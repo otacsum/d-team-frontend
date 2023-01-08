@@ -1,89 +1,96 @@
-<div class="gpa">
-    GPA: {{GPA}}
-</div>
+<mat-card class="gpa">
+    <mat-card-content>
+        <mat-icon fontIcon="history_edu"></mat-icon>
+        <div class="gpa_score">
+            {{GPA}}
+        </div>
+        <div class="subtext">Cumulative GPA</div>
+    </mat-card-content>
+</mat-card>
 
-<mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($any($event.target).value)"
-        placeholder="Search for a course ID, Description, Instructor, etc..." #input>
-</mat-form-field>
+
+<h2>Active Courses</h2>
 
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
-
-    <ng-container matColumnDef="{{column.key}}" *ngFor="let column of columnsToDisplay">
-        <th mat-header-cell *matHeaderCellDef> {{column.header}} </th>
-        <td mat-cell *matCellDef="let studentCourse"> 
-            {{(column.key == 'start_date' || column.key == 'end_date') ? (studentCourse.course[column.key] | date: 'shortDate') : studentCourse.course[column.key]}}
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="expand">
-        <th mat-header-cell *matHeaderCellDef aria-label="row actions">
-        </th>
-        <td mat-cell *matCellDef="let studentCourse">
-            <ng-container>
-                <button mat-icon-button aria-label="expand row"
-                    (click)="(expandedCourse = expandedCourse === studentCourse ? null : studentCourse); $event.stopPropagation()">
-                    <mat-icon *ngIf="expandedCourse !== studentCourse">keyboard_arrow_down</mat-icon>
-                    <mat-icon *ngIf="expandedCourse === studentCourse">keyboard_arrow_up</mat-icon>
-                </button>
-
-                <button
-                    mat-icon-button routerLink="/course/{{studentCourse.course.id}}" aria-label="View course">
-                    <mat-icon fontIcon="login"></mat-icon>
-                </button>
-
-                <button
-                    mat-icon-button aria-label="drop course"
-                    (click)='dropCourse(studentCourse); $event.stopPropagation()'>
-                    <mat-icon fontIcon="delete"></mat-icon>
-                </button>
+    <mat-card>
+        <mat-card-content>
+            <ng-container matColumnDef="{{column.key}}" *ngFor="let column of columnsToDisplay">
+                <th mat-header-cell *matHeaderCellDef> {{column.header}} </th>
+                <td mat-cell *matCellDef="let studentCourse">
+                    {{(column.key == 'start_date' || column.key == 'end_date') ? (studentCourse.course[column.key] |
+                    date: 'shortDate') : studentCourse.course[column.key]}}
+                </td>
             </ng-container>
-        </td>
-    </ng-container>
 
-    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-    <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let studentCourse" [attr.colspan]="columnsToDisplayWithExpand.length">
-            <div class="course-detail" [@detailExpand]="studentCourse == expandedCourse ? 'expanded' : 'collapsed'">
-                <div class="course-properties">
+            <ng-container matColumnDef="expand">
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+                </th>
+                <td mat-cell *matCellDef="let studentCourse">
+                    <ng-container>
+                        <button mat-icon-button aria-label="expand row"
+                            (click)="(expandedCourse = expandedCourse === studentCourse ? null : studentCourse); $event.stopPropagation()">
+                            <mat-icon *ngIf="expandedCourse !== studentCourse">keyboard_arrow_down</mat-icon>
+                            <mat-icon *ngIf="expandedCourse === studentCourse">keyboard_arrow_up</mat-icon>
+                        </button>
 
-                    <div class="detail-header">{{studentCourse.course.subject_abbreviation}}{{studentCourse.course.code}}</div>
-                    <div class="detail-content">{{studentCourse.course.title}}</div>
+                        <button mat-icon-button routerLink="/course/{{studentCourse.course.id}}"
+                            aria-label="View course">
+                            <mat-icon fontIcon="login"></mat-icon>
+                        </button>
 
-                    <div class="detail-header">Dates:</div>
-                    <div class="detail-content">Starts: {{studentCourse.course.start_date | date: 'shortDate'}}</div>
-                    <div class="detail-content">Ends: {{studentCourse.course.end_date | date: 'shortDate'}}</div>
-                    <div class="detail-content">Registered Students: {{studentCourse.course.student_count}}</div>
+                        <button mat-icon-button aria-label="drop course"
+                            (click)='dropCourse(studentCourse); $event.stopPropagation()'>
+                            <mat-icon fontIcon="delete"></mat-icon>
+                        </button>
+                    </ng-container>
+                </td>
+            </ng-container>
 
-                    <div class="detail-header">Description:</div>
-                    <div class="detail-content">{{studentCourse.course.description}}</div>
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let studentCourse" [attr.colspan]="columnsToDisplayWithExpand.length">
+                    <div class="course-detail"
+                        [@detailExpand]="studentCourse == expandedCourse ? 'expanded' : 'collapsed'">
+                        <div class="course-properties">
 
-                    <div class="detail-header">Instructor:</div>
-                    <div class="detail-content">{{studentCourse.course.instructor.first_name}} {{studentCourse.course.instructor.last_name}}</div>
-                    <div class="detail-content"><a [href]="studentCourse.course.instructor.email">{{studentCourse.course.instructor.email}}</a>
+                            <div class="detail-header">
+                                {{studentCourse.course.subject_abbreviation}}{{studentCourse.course.code}}</div>
+                            <div class="detail-content">{{studentCourse.course.title}}</div>
+
+                            <div class="detail-header">Dates:</div>
+                            <div class="detail-content">Starts: {{studentCourse.course.start_date | date: 'shortDate'}}
+                            </div>
+                            <div class="detail-content">Ends: {{studentCourse.course.end_date | date: 'shortDate'}}
+                            </div>
+                            <div class="detail-content">Registered Students: {{studentCourse.course.student_count}}
+                            </div>
+
+                            <div class="detail-header">Description:</div>
+                            <div class="detail-content">{{studentCourse.course.description}}</div>
+
+                            <div class="detail-header">Instructor:</div>
+                            <div class="detail-content">{{studentCourse.course.instructor.first_name}}
+                                {{studentCourse.course.instructor.last_name}}</div>
+                            <div class="detail-email"><a
+                                    [href]="studentCourse.course.instructor.email">{{studentCourse.course.instructor.email}}</a>
+                            </div>
+
+                            <div class="detail-header">Other:</div>
+                            <div class="detail-content">ID: {{studentCourse.course.id}}</div>
+                            <div class="detail-content">Active Course: {{studentCourse.course.is_active}}</div>
+                            <div class="detail-content">Created: {{studentCourse.course.createdAt}}</div>
+                            <div class="detail-content">Last Updated: {{studentCourse.course.updatedAt}}</div>
+                        </div>
                     </div>
+                </td>
+            </ng-container>
 
-                    <div class="detail-header">Other:</div>
-                    <div class="detail-content">ID: {{studentCourse.course.id}}</div>
-                    <div class="detail-content">Active Course: {{studentCourse.course.is_active}}</div>
-                    <div class="detail-content">Created: {{studentCourse.course.createdAt}}</div>
-                    <div class="detail-content">Last Updated: {{studentCourse.course.updatedAt}}</div>
-                </div>
-            </div>
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-    <tr mat-row *matRowDef="let studentCourse; columns: columnsToDisplayWithExpand;" class="person-row"
-        [class.expanded-row]="expandedCourse === studentCourse"
-        (click)="expandedCourse = expandedCourse === studentCourse ? null : studentCourse">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
-
-    <!-- Row shown when there is no matching data. -->
-    <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" [attr.colspan]="columnsToDisplayWithExpand.length">No data matching the filter
-            "{{input.value}}"</td>
-    </tr>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+            <tr mat-row *matRowDef="let studentCourse; columns: columnsToDisplayWithExpand;" class="course-row"
+                [class.expanded-row]="expandedCourse === studentCourse"
+                (click)="expandedCourse = expandedCourse === studentCourse ? null : studentCourse">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+        </mat-card-content>
+    </mat-card>
 </table>

@@ -1,20 +1,15 @@
 <div [hidden]="!(showCourses == 'all')">
     <mat-form-field>
-        <mat-label>Filter</mat-label>
+        <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilter($any($event.target).value)"
             placeholder="Search for a course ID, Description, Instructor, etc..." #input>
     </mat-form-field>
 
     <mat-form-field>
-        <mat-select placeholder="Another way to filter" (selectionChange)="applyFilter($any($event).value)">
-            <mat-option value="HIST">
-                History
-            </mat-option>
-            <mat-option value="CSE">
-                Computer Science & Computer Engineering
-            </mat-option>
-            <mat-option value="PHYS">
-                Physics
+        <mat-select placeholder="Filter by Subject" (selectionChange)="applyFilter($any($event).value)">
+            <mat-option value="">All Subjects</mat-option>
+            <mat-option *ngFor="let subject of subjects" [value]="subject.abbreviation">
+                {{ subject.name }}
             </mat-option>
         </mat-select>
     </mat-form-field>
