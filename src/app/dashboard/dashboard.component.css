@@ -39,6 +39,26 @@ mat-card-subtitle span {
     margin-left: 25px;
 }
 
-.guest-intro div {
+.new-student h1, .intro h1, .about h2 {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: left !important;
+    margin-top: 20px;
+}
+
+.new-student div a, .intro div a {
+    color: #0a566e;
+    font-size: 1.2em;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.new-student div a:hover {
+    color: #38bdf8;
+}
+
+.intro div {
+    font-size: 1.2em;
     margin: 10px 50px;
+    line-height: 150%;
 }

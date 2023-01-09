@@ -1,22 +1,40 @@
 <h2 *ngIf="isLoggedIn">Welcome, {{user.first_name}}</h2>
 
 <div *ngIf="userRole == 'student'">
-    <h2>My Courses</h2>
-    <div class="classroom-card-container">
-        <mat-card class="classroom-card" *ngFor="let course of courses" routerLink="/course/{{course.id}}">
-            <mat-card-header>
-                <mat-card-title>{{course.title}}</mat-card-title>
-                <mat-card-subtitle>{{course.subject_abbreviation}} {{course.code}}
-                    <span>Ends: {{course.end_date | date: 'shortDate'}}</span> </mat-card-subtitle>
-                <mat-card-subtitle>Instructor: {{course.instructor!.first_name}}
-                    {{course.instructor!.last_name}} <a href="mailto: {{course.instructor!.email}}"
-                        title="E-mail Instructor" (click)="$event.stopPropagation()"><mat-icon
-                            fontIcon="mail"></mat-icon></a></mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <p>{{course.description}}</p>
-            </mat-card-content>
-        </mat-card>
+    <ng-container *ngIf="courses.length > 0">
+        <h2>My Courses</h2>
+        <div class="classroom-card-container">
+            <mat-card class="classroom-card" *ngFor="let course of courses" routerLink="/course/{{course.id}}">
+                <mat-card-header>
+                    <mat-card-title>{{course.title}}</mat-card-title>
+                    <mat-card-subtitle>{{course.subject_abbreviation}} {{course.code}}
+                        <span>Ends: {{course.end_date | date: 'shortDate'}}</span> </mat-card-subtitle>
+                    <mat-card-subtitle>Instructor: {{course.instructor!.first_name}}
+                        {{course.instructor!.last_name}} <a href="mailto: {{course.instructor!.email}}"
+                            title="E-mail Instructor" (click)="$event.stopPropagation()"><mat-icon
+                                fontIcon="mail"></mat-icon></a></mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>{{course.description}}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </ng-container>
+
+
+    <div *ngIf="courses.length <= 0" class="intro new-student">
+        <div>
+            <h1>Getting Started</h1>
+            <div>
+                <a href="">New Student Resources</a>
+            </div>
+            <div>
+                <a routerLink="/courses">Browse Courses</a>
+            </div>
+            <div>
+                <a routerLink="/people">Contact a Professor</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -32,22 +50,21 @@
     <a routerLink="/courses">Manage Courses</a>
 </div>
 
-<div *ngIf="!isLoggedIn" class="guest-intro">
+<div *ngIf="!isLoggedIn" class="intro">
     <h2>Welcome Prospective Students</h2>
-    <div>
-        Everyone loves cheese strings edam. Manchego emmental melted cheese cream cheese jarlsberg macaroni cheese
-        macaroni cheese cheese and wine. Red leicester port-salut cheesy grin swiss halloumi port-salut camembert de
-        normandie cream cheese. Fromage frais cottage cheese dolcelatte rubber cheese who moved my cheese red leicester
-        cheesy grin manchego. Cheeseburger paneer the big cheese dolcelatte manchego monterey jack chalk and cheese
-        goat. Jarlsberg dolcelatte cheese triangles fromage frais pepper jack red leicester port-salut swiss. Camembert
-        de normandie when the cheese comes out everybody's happy croque monsieur.
+    <div class="about">
+        <h2>About the LAUSD</h2>
+        <div>
+            Accredited by the Higher Learning Commission (www.hlcommission.org), LAUSD offers a variety of learning options to new students, transfer students, working professionals, and active and retired military. At LAUSD's California campuses in Los Angeles, Burbank, and Sacremento, or via the Internet in homes and offices around the world, A LAUSD education is designed around a busy life.
+        </div>
     </div>
-    <div>
-        Cheese and wine cheddar cut the cheese. Macaroni cheese stinking bishop stinking bishop cheese and wine who
-        moved my cheese fromage frais queso cheese and wine. Taleggio caerphilly cheese triangles cheese on toast chalk
-        and cheese croque monsieur everyone loves cheese slices. Feta cheese slices when the cheese comes out
-        everybody's happy smelly cheese cauliflower cheese bavarian bergkase parmesan who moved my cheese. Cheese and
-        biscuits st. agur blue cheese st. agur blue cheese feta cut the cheese who moved my cheese blue castello brie.
-        St. agur blue cheese who moved my cheese caerphilly cheese slices the big cheese cheese and biscuits.
+    <div class="about">
+        <h2>LAUSD History</h2>
+        <div>
+        The LAUSD was founded by four members of CS492 at Colorado Technical University, <b>Anthony Hoffmeyer, Bryce Howell, Michael Muscato, and Hollie Nelson,</b> with the intent of demonstrating a full-featured school management system.  The application is created on Node.js using the Nest.js back-end framework, Angular.js front-end framework, and a Postgres SQL Database.  
+    </div>
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non erat mattis, mattis neque a, ornare augue. In hac habitasse platea dictumst. Aenean eget felis vel tortor scelerisque fringilla non vel mi. Praesent vel nisi malesuada, semper tellus a, fermentum arcu. Nullam vitae justo et lacus finibus aliquam. Vivamus porta orci et velit ullamcorper, a lobortis mi ultrices. Duis sodales aliquam velit, vel rutrum lectus bibendum rutrum. Aenean consequat odio nec neque efficitur tristique. Ut non dui at nunc interdum accumsan. Etiam hendrerit auctor volutpat.
+        </div>
     </div>
 </div>
