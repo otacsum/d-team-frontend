@@ -69,10 +69,6 @@
                 </button>
             </ng-container>
 
-            <button matTooltip="Course is Full" *ngIf="(+course.student_count >= 20)" mat-icon-button aria-label="course is full">
-                <mat-icon fontIcon="lock"></mat-icon>
-            </button>
-
             <ng-container *ngIf="(showCourses == 'all' && course.students!.indexOf(this.sessionHandler!.userId) >= 0)">
                 <button matTooltip="You Are Registered" mat-icon-button
                     aria-label="you are registered">
@@ -84,6 +80,10 @@
                     <mat-icon fontIcon="login"></mat-icon>
                 </button>
             </ng-container>
+
+            <button matTooltip="Course is Full" *ngIf="(+course.student_count >= 20)" mat-icon-button aria-label="course is full">
+                <mat-icon fontIcon="lock"></mat-icon>
+            </button>
 
             <button matTooltip="Delete Course" *ngIf="(sessionHandler.userId == course.person_id || sessionHandler.userRole == 'administrator')"
                 mat-icon-button aria-label="delete course"
