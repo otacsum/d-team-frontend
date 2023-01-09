@@ -49,6 +49,10 @@ export class CoursesComponent {
             header: 'Title',
         },
         {
+            key: 'status',
+            header: 'Status',
+        },
+        {
             key: 'start_date',
             header: 'Starts',
         },

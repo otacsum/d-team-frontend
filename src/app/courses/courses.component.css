@@ -38,3 +38,29 @@ td button, th button {
     width: 100%;
     margin-top: 10px;
 }
+
+span.full-course, span.almost-full-course, span.open-course {
+    display: inline-block;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;
+}
+
+span.full-course {
+    color: #64748b;
+    background-color: #e2e8f0;
+}
+
+span.almost-full-course {
+    color: #d97706;
+    background-color: #fef3c7;
+}
+
+span.open-course {
+    color: #059669;
+    background-color: #d1fae5;
+}

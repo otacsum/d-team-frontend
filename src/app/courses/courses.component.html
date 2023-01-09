@@ -21,7 +21,24 @@
     <ng-container matColumnDef="{{column.key}}" *ngFor="let column of columnsToDisplay">
         <th mat-header-cell *matHeaderCellDef> {{column.header}} </th>
         <td mat-cell *matCellDef="let course"> 
-            {{(column.key == 'start_date' || column.key == 'end_date') ? (course[column.key] | date: 'shortDate') : course[column.key]}}
+            <ng-container *ngIf="(column.key == 'start_date' || column.key == 'end_date')">
+                {{course[column.key] | date: 'shortDate'}}
+            </ng-container>
+
+            <ng-container *ngIf="(column.key == 'status' && course.student_count >= 3)">
+                <span class="full-course">FULL</span>
+            </ng-container>
+            <ng-container *ngIf="(column.key == 'status' && course.student_count >= 2 && course.student_count < 3)">
+                <span class="almost-full-course">Almost Full</span>
+            </ng-container>
+            <ng-container *ngIf="(column.key == 'status' && course.student_count < 2)">
+                <span class="open-course">Open</span>
+            </ng-container>
+
+
+            <ng-container *ngIf="!(column.key == 'start_date' || column.key == 'end_date' || column.key == 'status')">
+                {{course[column.key]}}
+            </ng-container>
         </td>
     </ng-container>
 
@@ -56,7 +73,7 @@
                 <mat-icon fontIcon="lock"></mat-icon>
             </button>
 
-            <ng-container *ngIf="(showCourses == 'all' && course.students!.indexOf(this.sessionHandler.userId) >= 0)">
+            <ng-container *ngIf="(showCourses == 'all' && course.students!.indexOf(this.sessionHandler!.userId) >= 0)">
                 <button matTooltip="You Are Registered" mat-icon-button
                     aria-label="you are registered">
                     <mat-icon fontIcon="school"></mat-icon>
