@@ -25,13 +25,13 @@
                 {{course[column.key] | date: 'shortDate'}}
             </ng-container>
 
-            <ng-container *ngIf="(column.key == 'status' && course.student_count >= 3)">
+            <ng-container *ngIf="(column.key == 'status' && course.student_count >= 20)">
                 <span class="full-course">FULL</span>
             </ng-container>
-            <ng-container *ngIf="(column.key == 'status' && course.student_count >= 2 && course.student_count < 3)">
+            <ng-container *ngIf="(column.key == 'status' && course.student_count >= 17 && course.student_count < 20)">
                 <span class="almost-full-course">Almost Full</span>
             </ng-container>
-            <ng-container *ngIf="(column.key == 'status' && course.student_count < 2)">
+            <ng-container *ngIf="(column.key == 'status' && course.student_count < 17)">
                 <span class="open-course">Open</span>
             </ng-container>
 
