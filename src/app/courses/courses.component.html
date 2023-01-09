@@ -67,6 +67,10 @@
                     (click)="joinCourse(course.id, course.subject_abbreviation + course.code); $event.stopPropagation()">
                     <mat-icon matTooltip="" fontIcon="add_business"></mat-icon>
                 </button>
+
+                <button matTooltip="Course is Full" *ngIf="(+course.student_count >= 20) && !(course.students!.indexOf(this.sessionHandler!.userId) >= 0)" mat-icon-button aria-label="course is full">
+                    <mat-icon fontIcon="lock"></mat-icon>
+                </button>
             </ng-container>
 
             <ng-container *ngIf="(showCourses == 'all' && course.students!.indexOf(this.sessionHandler!.userId) >= 0)">
@@ -80,10 +84,6 @@
                     <mat-icon fontIcon="login"></mat-icon>
                 </button>
             </ng-container>
-
-            <button matTooltip="Course is Full" *ngIf="(+course.student_count >= 20)" mat-icon-button aria-label="course is full">
-                <mat-icon fontIcon="lock"></mat-icon>
-            </button>
 
             <button matTooltip="Delete Course" *ngIf="(sessionHandler.userId == course.person_id || sessionHandler.userRole == 'administrator')"
                 mat-icon-button aria-label="delete course"
