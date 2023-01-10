@@ -22,18 +22,25 @@
     </ng-container>
 
 
-    <div *ngIf="courses.length <= 0" class="intro new-student">
+    <div *ngIf="courses.length <= 0" class="new-student">
         <div>
             <h1>Getting Started</h1>
-            <div>
-                <a routerLink="/resources">New Student Resources</a>
-            </div>
-            <div>
-                <a routerLink="/courses">Browse Courses</a>
-            </div>
-            <div>
-                <a routerLink="/people">Contact a Professor</a>
-            </div>
+            <mat-list>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>menu</mat-icon>
+                    <div matListItemTitle><a routerLink="/resources">New Student Resources</a></div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>menu</mat-icon>
+                    <div matListItemTitle><a routerLink="/courses">Browse Courses</a></div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>menu</mat-icon>
+                    <div matListItemTitle><a routerLink="/people">Contact a Professor</a></div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </mat-list>
         </div>
     </div>
 </div>
@@ -44,10 +51,23 @@
 </div>
 
 <div *ngIf="userRole == 'administrator'" class="admin-links">
-    <h2>LAUSD Administration</h2>
-    <a routerLink="/person/create">Create User</a>
-    <a routerLink="/people">Manage Users</a>
-    <a routerLink="/courses">Manage Courses</a>
+    <h1>LAUSD Administration</h1>
+    <mat-list>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <mat-icon matListItemIcon>menu</mat-icon>
+            <div matListItemTitle><a routerLink="/person/create">Create User</a></div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon matListItemIcon>menu</mat-icon>
+            <div matListItemTitle><a routerLink="/people">Manage Users</a></div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon matListItemIcon>menu</mat-icon>
+            <div matListItemTitle><a routerLink="/courses">Manage Courses</a></div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </mat-list>
 </div>
 
 <div *ngIf="!isLoggedIn" class="intro">
@@ -55,16 +75,27 @@
     <div class="about">
         <h2>About the LAUSD</h2>
         <div>
-            Accredited by the Higher Learning Commission (www.hlcommission.org), LAUSD offers a variety of learning options to new students, transfer students, working professionals, and active and retired military. At LAUSD's California campuses in Los Angeles, Burbank, and Sacremento, or via the Internet in homes and offices around the world, A LAUSD education is designed around a busy life.
+            Accredited by the Higher Learning Commission (www.hlcommission.org), LAUSD offers a variety of learning
+            options to new students, transfer students, working professionals, and active and retired military. At
+            LAUSD's California campuses in Los Angeles, Burbank, and Sacremento, or via the Internet in homes and
+            offices around the world, A LAUSD education is designed around a busy life.
         </div>
     </div>
     <div class="about">
         <h2>LAUSD History</h2>
         <div>
-        The LAUSD was founded by four members of CS492 at Colorado Technical University, <b>Anthony Hoffmeyer, Bryce Howell, Michael Muscato, and Hollie Nelson,</b> with the intent of demonstrating a full-featured school management system.  The application is created on Node.js using the Nest.js back-end framework, Angular.js front-end framework, and a Postgres SQL Database.  
-    </div>
+            The LAUSD was founded by four members of CS492 at Colorado Technical University, <b>Anthony Hoffmeyer, Bryce
+                Howell, Michael Muscato, and Hollie Nelson,</b> with the intent of demonstrating a full-featured school
+            management system. The application is created on Node.js using the Nest.js back-end framework, Angular.js
+            front-end framework, and a Postgres SQL Database.
+        </div>
         <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non erat mattis, mattis neque a, ornare augue. In hac habitasse platea dictumst. Aenean eget felis vel tortor scelerisque fringilla non vel mi. Praesent vel nisi malesuada, semper tellus a, fermentum arcu. Nullam vitae justo et lacus finibus aliquam. Vivamus porta orci et velit ullamcorper, a lobortis mi ultrices. Duis sodales aliquam velit, vel rutrum lectus bibendum rutrum. Aenean consequat odio nec neque efficitur tristique. Ut non dui at nunc interdum accumsan. Etiam hendrerit auctor volutpat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non erat mattis, mattis neque a, ornare
+            augue. In hac habitasse platea dictumst. Aenean eget felis vel tortor scelerisque fringilla non vel mi.
+            Praesent vel nisi malesuada, semper tellus a, fermentum arcu. Nullam vitae justo et lacus finibus aliquam.
+            Vivamus porta orci et velit ullamcorper, a lobortis mi ultrices. Duis sodales aliquam velit, vel rutrum
+            lectus bibendum rutrum. Aenean consequat odio nec neque efficitur tristique. Ut non dui at nunc interdum
+            accumsan. Etiam hendrerit auctor volutpat.
         </div>
     </div>
 </div>

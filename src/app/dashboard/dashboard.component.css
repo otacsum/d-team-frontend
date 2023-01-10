@@ -1,4 +1,9 @@
-div.admin-links a {
+div.admin-links, div.new-student {
+    width: 300px;
+    margin: auto;
+}
+
+div.admin-links a,  div.new-student a {
     padding: 0.3rem;
     font-weight: bold;
     text-align: center;
@@ -39,22 +44,17 @@ mat-card-subtitle span {
     margin-left: 25px;
 }
 
-.new-student h1, .intro h1, .about h2 {
+.new-student h1, .intro h1, .admin-links h1, .about h2 {
     font-size: 2em;
     font-weight: bold;
-    text-align: left !important;
     margin-top: 20px;
 }
 
-.new-student div a, .intro div a {
+.intro div a {
     color: #0a566e;
     font-size: 1.2em;
     text-decoration: none;
     font-weight: bold;
-}
-
-.new-student div a:hover {
-    color: #38bdf8;
 }
 
 .intro div {
