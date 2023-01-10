@@ -68,7 +68,7 @@
                     <mat-icon matTooltip="" fontIcon="add_business"></mat-icon>
                 </button>
 
-                <button matTooltip="Course is Full" *ngIf="(+course.student_count >= 20) && !(course.students!.indexOf(this.sessionHandler!.userId) >= 0)" mat-icon-button aria-label="course is full">
+                <button matTooltip="Course is Full" *ngIf="(+course.student_count >= 20) && sessionHandler.loggedIn == true && !(course.students!.indexOf(this.sessionHandler!.userId) >= 0)" mat-icon-button aria-label="course is full">
                     <mat-icon fontIcon="lock"></mat-icon>
                 </button>
             </ng-container>
