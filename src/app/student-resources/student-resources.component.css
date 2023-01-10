@@ -1,0 +1,41 @@
+.tiles {
+    background-color: #e2e8f0;
+    border: 2px solid #0a566e;
+    border-radius: 5px;
+}
+
+.library h1, .bookshelf h1, .tutoring h1 {
+    font-weight: bold;
+}
+
+.bookshelf div {
+    text-align: left;
+}
+
+
+.library div div.cards {
+    display: flex;
+    flex-direction: row;
+}
+
+mat-card {
+    border: 1px solid #64748b;
+    margin: 0px 10px;
+}
+
+.tile-icon {
+    margin: 10px 30px 10px 35px;
+}
+
+.tile-icon mat-icon {
+    transform: scale(3);
+}
+
+mat-card-content {
+    margin-top: 10px;
+}
+
+.library-card {
+    cursor: pointer;
+    min-width: 350px;
+}

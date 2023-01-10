@@ -18,13 +18,6 @@ tr.course-row:not(.example-expanded-row):active {
     border-bottom-width: 0;
 }
 
-.course-detail {
-    overflow: hidden;
-    display: flex;
-}
-
-
-
 .detail-header {
     font-weight: bold;
     margin-top: 10px;

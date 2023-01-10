@@ -1,0 +1,87 @@
+<div class="tiles mat-elevation-z8">
+    <mat-grid-list cols="8" rowHeight="325px">
+        <mat-grid-tile [colspan]="8" [rowspan]="1" class="library">
+            <div>
+                <h1>Library</h1>
+
+                <div class="cards">
+                    <mat-card class="library-card" *ngFor="let item of libraryItems">
+                        <mat-card-header>
+                            <mat-card-title-group>
+                                <mat-card-title>{{item.title}}</mat-card-title>
+                                <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>
+                                <span class="tile-icon"><mat-icon fontIcon="{{item.iconName}}"></mat-icon></span>
+                            </mat-card-title-group>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>{{item.blurb}}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="2" class="bookshelf">
+            <div>
+                <h1>My Bookshelf</h1>
+                <mat-list>
+                    <mat-divider></mat-divider>
+                    <mat-list-item lines="3" *ngFor="let item of bookshelfItems">
+                        <mat-icon matListItemIcon>menu</mat-icon>
+                        <div matListItemTitle>{{item}}</div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </mat-list>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="5" [rowspan]="2" class="tutoring">
+            <div>
+                <h1>Tutoring Services</h1>
+                <div>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc a dignissim orci. Nam quis euismod
+                    velit. Curabitur porttitor, tellus et fringilla pretium, tellus metus viverra orci, sed posuere
+                    neque libero at sem. Aliquam id vehicula ex. Mauris semper facilisis nulla, ac ornare tortor
+                    scelerisque et. Suspendisse a tristique dolor. Maecenas finibus aliquam nulla, et rutrum dolor
+                    ornare sed. Aenean tincidunt convallis nibh vitae viverra. Duis in nulla quis magna imperdiet
+                    eleifend non a nisi. Mauris sapien velit, finibus id risus ut, laoreet tincidunt felis. Donec arcu
+                    neque, eleifend sed tincidunt in, lacinia nec purus. In condimentum quam sed nunc maximus rhoncus.
+                </div>
+                <div>
+                    Aliquam mollis hendrerit quam sed commodo. Aliquam massa nisi, fringilla ac sapien quis, eleifend
+                    scelerisque lorem. Curabitur vestibulum consequat mauris non interdum. Suspendisse ut velit non
+                    risus vestibulum porttitor nec et nulla. Duis rhoncus turpis massa, in vulputate lorem ornare at.
+                    Praesent sit amet orci vel enim tincidunt consectetur. Vivamus efficitur tincidunt velit fringilla
+                    efficitur. Nunc at molestie quam. Nulla eu odio dui. Donec et sem ex. Praesent fringilla porttitor
+                    commodo. Nam turpis magna, suscipit nec bibendum in, posuere at dui. Pellentesque ultrices dolor
+                    est.
+                </div>
+                <div>
+                    Duis diam mauris, faucibus eget massa vitae, tempus iaculis massa. Nulla egestas dapibus urna, non
+                    sollicitudin arcu fermentum sed. Sed porta mi non velit mattis, in dictum eros ultricies.
+                    Pellentesque vitae metus quis nibh tristique sollicitudin. Interdum et malesuada fames ac ante ipsum
+                    primis in faucibus. Proin ex ante, lacinia et lectus eu, blandit varius nisi. Praesent et leo
+                    sollicitudin, fringilla justo ut, finibus mi. Curabitur lacus nulla, laoreet eu elit vel, tempus
+                    tempor urna. Mauris feugiat placerat nulla, vel ornare ipsum pulvinar ac. Sed enim justo, efficitur
+                    vel odio sit amet, consequat porttitor felis. Nam non ipsum felis. Cras posuere enim vitae purus
+                    pulvinar, eu elementum metus commodo. Praesent tortor ex, consequat ut suscipit sed, convallis non
+                    massa.
+                </div>
+                <div>
+                    Nam tristique rhoncus mi. Nam felis lacus, malesuada in mollis vitae, feugiat vel velit. Ut in
+                    tortor a urna ultricies pulvinar a eu velit. Cras vehicula quis nunc non mollis. Curabitur metus
+                    metus, sagittis vitae quam sit amet, luctus blandit massa. Vestibulum nec luctus mauris. Etiam nunc
+                    est, sodales vel orci a, malesuada iaculis felis. Suspendisse nec justo venenatis, scelerisque eros
+                    tempus, efficitur risus. Quisque mauris sem, condimentum a iaculis ac, gravida ac nisi. Sed cursus
+                    est quis nulla convallis laoreet. Suspendisse faucibus tempus viverra. Etiam lobortis condimentum
+                    nunc, sed tristique quam posuere sit amet. Phasellus dignissim eros non ex ullamcorper, eget tempor
+                    purus gravida. Morbi sodales mattis nulla, in varius justo laoreet ut.
+                </div>
+                <div>
+                    Vivamus vel sem diam. Quisque eleifend tincidunt elit quis pretium. Duis sed scelerisque nibh, in
+                    porta risus. Proin aliquet quis erat ac sodales. Cras imperdiet eu felis id dapibus. Curabitur id mi
+                    ex. Mauris id enim at orci rutrum scelerisque dapibus id nunc.
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

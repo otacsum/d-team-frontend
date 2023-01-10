@@ -8,14 +8,15 @@ import {LoginComponent} from './login/login.component';
 import {PeopleComponent} from './people/people.component';
 import {PersonDetailComponent} from './people/person-detail/person-detail.component';
 import {StudentCoursesComponent} from './student-courses/student-courses.component';
-import {TeacherCredentialComponent} from './teacher-credentials/teacher-credential.component';
 import {TeacherCredentialDetailComponent} from './teacher-credentials/teacher-credential-detail/teacher-credential-detail.component';
 import {AssignmentDetailComponent} from './assignments/assignment-detail/assignment-detail.component';
 import {AssignmentGradeComponent} from './assignment-grades/assignment-grades.component';
+import {StudentResourcesComponent} from './student-resources/student-resources.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     {path: 'dashboard', component: DashboardComponent},
+    {path: 'resources', component: StudentResourcesComponent},
     {path: 'login', component: LoginComponent},
     {path: 'courses', component: CoursesComponent},
     {path: 'courses/student', component: StudentCoursesComponent},

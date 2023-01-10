@@ -18,6 +18,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
 
 // Components
 import {AppComponent} from './app.component';
@@ -36,6 +38,7 @@ import {TeacherCredentialDetailComponent} from './teacher-credentials/teacher-cr
 import {AssignmentComponent} from './assignments/assignment.component';
 import {AssignmentDetailComponent} from './assignments/assignment-detail/assignment-detail.component';
 import {AssignmentGradeComponent} from './assignment-grades/assignment-grades.component';
+import { StudentResourcesComponent } from './student-resources/student-resources.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +57,7 @@ import {AssignmentGradeComponent} from './assignment-grades/assignment-grades.co
         AssignmentComponent,
         AssignmentDetailComponent,
         AssignmentGradeComponent,
+        StudentResourcesComponent,
     ],
     imports: [
         BrowserModule,
@@ -73,6 +77,8 @@ import {AssignmentGradeComponent} from './assignment-grades/assignment-grades.co
         MatDatepickerModule,
         MatNativeDateModule,
         MatTooltipModule,
+        MatGridListModule,
+        MatListModule,
     ],
     providers: [
         MatTableDataSource,
