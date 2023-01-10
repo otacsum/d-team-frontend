@@ -13,7 +13,7 @@
     <a routerLink="/courses">Course Catalog</a>
     <a *ngIf="sessionHandler.loggedIn" routerLink="/person/{{sessionHandler.userId}}">My Classes</a>
     <a *ngIf="sessionHandler.loggedIn" routerLink="/people">Students & Staff</a>
-    <a *ngIf="sessionHandler.loggedIn" routerLink="/resources">Student Resources</a>
+    <a *ngIf="sessionHandler.loggedIn && sessionHandler.userRole == 'student'" routerLink="/resources">Student Resources</a>
     <a *ngIf="sessionHandler.loggedIn" routerLink="/person/{{sessionHandler.userId}}">My Account</a>
     <a *ngIf="!sessionHandler.loggedIn" routerLink="/person/create">Register</a>
 </nav>
